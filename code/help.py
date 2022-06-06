@@ -58,7 +58,8 @@ class HelpCog(commands.Cog):
 		# Embed Games
 		games_embed = discord.Embed(
 				title = 'Games do Kivida Bot',
-				description=f'**rank c4**\n Veja o rank de vitórias do jogo Connect4\n(Jogos contra o bot não contam vitória.)\n**Modo de usar:** `{prefix}rank c4`',
+				description=f'**adivinhar | adv**\n O bot pensará em um número entre 1 e 100. e se você acertar o número em 4 tentativas, 5.000<:diamantt:973404655050719232>\n**Modo de usar:** `{prefix}adivinhar`'
+				f'**rank c4**\n Veja o rank de vitórias do jogo Connect4\n(Jogos contra o bot não contam vitória.)\n**Modo de usar:** `{prefix}rank c4`',
 				colour=0xFFD301
 			)
 		games_embed.add_field(name="CONNECT 4", value=f'**connect4** | **c4**\nJogue connect4 contra outro usuário ou contra o bot\n**Modo de usar:** `{prefix}c4 | {prefix}c4 bot`\n\n', inline=False)

@@ -25,6 +25,14 @@ def pass_to_date(value):
         return '-'
     return data
 
+def pass_to_num(value):
+    try:
+        num = int(value)
+        return num
+    except:
+        return False
+
+
 def get_id(member):
     # recebe um membro se for o Id já retorna se for <@member> remove os <@ > e retorna Id
     try:

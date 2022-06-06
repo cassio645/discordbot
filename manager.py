@@ -1,5 +1,5 @@
 import discord
-from discord.ext.commands.errors import CommandNotFound, MissingRequiredArgument, CommandOnCooldown, BadArgument, MissingPermissions
+from discord.ext.commands.errors import CommandNotFound, MissingRequiredArgument, CommandOnCooldown, BadArgument, MissingPermissions, CommandInvokeError
 from discord.ext import tasks
 from discord.ext import commands
 from db.mydb import delete_data, end_vip, get_all_vip
@@ -35,6 +35,8 @@ class Manager(commands.Cog):
             pass
         elif isinstance(error, BadArgument):
             pass
+        elif isinstance(error, CommandInvokeError):
+            await ctx.send("Esse comando não é permitido aqui nesse canal.")
         elif isinstance(error, MissingPermissions):
             await ctx.send("Você não tem permissão para usar este comando.")
         else:
