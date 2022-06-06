@@ -316,6 +316,11 @@ class GeneralCog(commands.Cog):
 		else:
 			embed_rank = discord.Embed(title=f"Consultar rank", description=f"**Rank de diamantes**: `{prefix}rank diamantes`\n**Rank vitorias**: `{prefix}rank c4`\n**Rank reps**: `{prefix}rank reps`\n**Rank xp**: `{prefix}rank xp`", colour=0xFFD301)
 			await ctx.send(embed=embed_rank)
+	
+	@commands.command()
+	async def work(self, ctx):
+		await ctx.send("https://cdn.discordapp.com/attachments/944649962686386256/983066514200616980/work.gif")
+		await ctx.send("Work, work, work, work,work, work\nHe said me haffi work, work, work, work, work, work")
 
 def setup(bot):
 	bot.add_cog(GeneralCog(bot))
