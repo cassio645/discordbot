@@ -58,7 +58,7 @@ class HelpCog(commands.Cog):
 		# Embed Games
 		games_embed = discord.Embed(
 				title = 'Games do Kivida Bot',
-				description=f'**adivinhar | adv**\n O bot pensará em um número entre 1 e 100. e se você acertar o número em 4 tentativas, 5.000<:diamantt:973404655050719232>\n**Modo de usar:** `{prefix}adivinhar`'
+				description=f'**adivinhar | adv**\nAdivinhe o númeroe ganhe diamantes.\n**Cooldown: 5 partidas por hora**ㅤㅤㅤ**Chances de adivinhar:** 4\n**Modo de usar:** `{prefix}adivinhar`\n\n'
 				f'**rank c4**\n Veja o rank de vitórias do jogo Connect4\n(Jogos contra o bot não contam vitória.)\n**Modo de usar:** `{prefix}rank c4`',
 				colour=0xFFD301
 			)
@@ -72,7 +72,8 @@ class HelpCog(commands.Cog):
 			description =f"**diamantes | money**\n Com esse comando você pode consultar quantos diamantes <:diamantt:973404655050719232> você tem.\n**Modo de usar:** `{prefix}diamantes`\n\n"
 			f"**daily**\n Pegue diariamente uma quantia em diamantes com esse comando.\n**Modo de usar:** `{prefix}daily`\n\n"
 			f"**rank diamantes**\n Vejo o rank dos mais ricos com esse comando\n**Modo de usar:** `{prefix}rank diamantes`\n\n"
-			f"**raspadinha**\n Compre uma raspadinha e para tentar aumentar seus diamantes, cada uma delas custa 500 <:diamantt:973404655050719232>, você pode ganhar nas linhas, colunas e diagonais.\n**Modo de usar:** `{prefix}raspadinha comprar`\n\n",
+			f"**raspadinha**\n Compre uma raspadinha e para tentar aumentar seus diamantes, cada uma delas custa 500 <:diamantt:973404655050719232>, você pode ganhar nas linhas, colunas e diagonais.\n**Modo de usar:** `{prefix}raspadinha comprar`\n\n"
+			f"**apostar**\nVocê pode tentar aumentar seus diamantes apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n",
 			colour=0xFFD301
 			)
 		diamantes_embed.add_field(name="\nㅤㅤㅤㅤㅤㅤㅤㅤCassino\n", value=f"**apostar**\nVocê pode tentar aumentar seus diamantes apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n")
@@ -105,7 +106,7 @@ class HelpCog(commands.Cog):
 			await ctx.send(embed=comandos_embed)
 		elif argument.lower() == 'diamante' or argument.lower() == 'diamantes' or argument.lower() == 'apostar':
 			await ctx.send(embed=diamantes_embed)
-		elif argument.lower() == 'games' or argument.lower() == 'game':
+		elif argument.lower() == 'games' or argument.lower() == 'game' or argument.lower() in ["adivinhar", "adv"]:
 			await ctx.send(embed=games_embed)
 		elif argument.lower() == 'perfil':
 			await ctx.send(embed=perfil_embed)

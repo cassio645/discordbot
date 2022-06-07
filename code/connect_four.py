@@ -265,7 +265,7 @@ class ConnectFour(commands.Cog):
         self.bot = bot
         self.games: list[Game] = []
         self.waiting: list[discord.Member] = []
-        self.channels = [944649962686386256]
+        self.channels = [982321475996504084, 983428734692503652, 968045281843220520, 968048613806723082, 982711181259210833]
 
         self.tokens = [":white_circle:", ":blue_circle:", ":red_circle:"]
 
@@ -372,7 +372,7 @@ class ConnectFour(commands.Cog):
         emoji2 = "\U0001f534"
     ) -> None:
         if int(ctx.channel.id) not in self.channels:
-            await ctx.send("Esse comando não é permitido aqui nesse canal.")
+            await ctx.send("Esse comando não é permitido aqui. <#983428734692503652>")
             return None
         """
         Play the classic game of Connect Four with someone!

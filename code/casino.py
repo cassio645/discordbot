@@ -31,7 +31,7 @@ class Casino(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.channels = [944649962686386256]
+        self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
     
     # raspadinha
     @commands.command()
@@ -93,7 +93,7 @@ class Casino(commands.Cog):
                 embed_raspadinha.set_footer(text='Kivida Bot')
                 await ctx.send(embed=embed_raspadinha)
         else:
-            await ctx.send("Esse comando não é permitido aqui nesse canal.")
+            await ctx.send("Esse comando não é permitido aqui nesse canal. <#983462889086124072>")
 
     @raspadinha.error
     async def raspadinha_error(self, ctx, error):
@@ -103,10 +103,15 @@ class Casino(commands.Cog):
 
     # slot-machine
     @commands.command(name="apostar", aliases=["aposta", "cassino"])
-    async def apostar(self, ctx, *, arg:int):
+    async def apostar(self, ctx, *, arg=0):
         if((ctx.channel.id) in self.channels):
             arg = pass_to_num(arg)
-            if not(arg) or arg <= 0:
+            print(arg)
+            if (arg is False) or arg <= 0:
+                diamantes_embed = discord.Embed(title="Apostar", description="Aposte para tentar aumentar seus diamantes. Você pode apostar qualquer valor, até 5x por hora. Os prêmios serão multiplicações do valor que você apostar. Confira abaixo.", colour=0xFFD301)
+                diamantes_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973589210097385512/banner.png")
+                diamantes_embed.set_footer(text='Kivida Bot')
+                await ctx.send(embed=diamantes_embed)
                 return
             cd = add_aposta(ctx.author.id)
             if cd == True:
@@ -203,7 +208,7 @@ class Casino(commands.Cog):
             else:
                 await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")
         else:
-            await ctx.send("Esse comando não é permitido aqui nesse canal.")
+            await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
 
 
 	
