@@ -140,7 +140,7 @@ def insert_c4_winner(user_id):
 
 # ------------ Funções de Money ---------------
 def add_money(user_id, values):
-    # adiciona diamantes
+    # adiciona kivs
     if collection.find_one({"_id": user_id}):
         user = collection.find_one({"_id": user_id})
         total = values + user["money"]
@@ -150,7 +150,7 @@ def add_money(user_id, values):
         add_new_user(user_id, money=values)
 
 def remove_money(user_id, values):
-    # remove uma quantia de diamantes, se a quantia for maior q a pessoa tem, retorna False
+    # remove uma quantia de kivs, se a quantia for maior q a pessoa tem, retorna False
     if collection.find_one({"_id": user_id}):
         user = collection.find_one({"_id": user_id})
         if values > user["money"]:
@@ -163,11 +163,11 @@ def remove_money(user_id, values):
     else: return False
 
 def get_balance(user_id):
-    # pega o valor de diamantes da pessoa
+    # pega o valor de kivs da pessoa
     try:
         user = collection.find_one({"_id": user_id})
-        diamantes = user["money"]
-        return diamantes
+        kivs = user["money"]
+        return kivs
     except TypeError:
         return 0
 

@@ -7,7 +7,7 @@ from EZPaginator import Paginator
 from time import sleep
 from db.mydb import get_all_vip, insert_vip, remove_money, end_vip, add_capa, get_user_capas
 from db.storedb import add_item, get_all_items, get_item, edit_item, remove_item
-from .funcoes import pass_to_dict, pass_to_money, get_days, verify_role_or_id, remove_png, get_prefix, find_capa
+from .funcoes import pass_to_dict, pass_to_money, get_days, verify_role_or_id, remove_png, get_prefix, find_capa, all_channels
 from .my_paginate import paginate_store
 
 prefix = get_prefix()
@@ -18,6 +18,7 @@ class Store(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.channels = all_channels()
         
     @commands.command(name="create_item", aliases=["create-item"])
     @commands.has_permissions(administrator=True)          
@@ -120,126 +121,129 @@ class Store(commands.Cog):
         
     @commands.command()
     async def loja(self, ctx, arg=None):
-        if arg is None:
-            items = get_all_items()
-            embed1, embeds = paginate_store(items, len(items), "Completa")
-            msg = await ctx.send(embed=embed1)
-            page = Paginator(bot=self.bot, message=msg, embeds=embeds)
-            await page.start()
-        elif arg.lower() in ["capa", "capas"]:
-            items = get_all_items("capas")
-            embed1, embeds = paginate_store(items, len(items), "de Capas")
-            msg = await ctx.send(embed=embed1)
-            page = Paginator(bot=self.bot, message=msg, embeds=embeds)
-            await page.start()
+        if ctx.channel.id in self.channels:
+            if arg is None:
+                items = get_all_items()
+                embed1, embeds = paginate_store(items, len(items), "Completa")
+                msg = await ctx.send(embed=embed1)
+                page = Paginator(bot=self.bot, message=msg, embeds=embeds)
+                await page.start()
+            elif arg.lower() in ["capa", "capas"]:
+                items = get_all_items("capas")
+                embed1, embeds = paginate_store(items, len(items), "de Capas")
+                msg = await ctx.send(embed=embed1)
+                page = Paginator(bot=self.bot, message=msg, embeds=embeds)
+                await page.start()
 
 
     @commands.command()
     async def info(self, ctx, *, arg):
-        if arg:
-            item = get_item(arg.lower(), field="cmd")
-            if item:
-                name = remove_png(item["name"])
-                price = pass_to_money(item["price"])
-                embed_item = discord.Embed(
-                    title=name.title(),
-                    description=item["desc"],
-                    colour=0xf0c21d
-                )
-                embed_item.add_field(name="Estoque", value=item["stock"])
-                embed_item.add_field(name="Preço", value=f"{price}<:diamantt:973404655050719232>")
-                if item["role"]:
-                    embed_item.add_field(name="Cargo", value=f'<@&{item["role"]}>')
-                elif item["img"]:
-                    embed_item.set_image(url=item["img"])
-                embed_item.add_field(name="Comando para comprar", value=f'`{prefix}comprar {item["cmd"]}`', inline=False)
-                embed_item.set_footer(text='Kivida Bot')
-                await ctx.send(embed=embed_item)
-            else:
-                await ctx.send("Item não encontrado")
-                return
+        if ctx.channel.id in self.channels:
+            if arg:
+                item = get_item(arg.lower(), field="cmd")
+                if item:
+                    name = remove_png(item["name"])
+                    price = pass_to_money(item["price"])
+                    embed_item = discord.Embed(
+                        title=name.title(),
+                        description=item["desc"],
+                        colour=0xf0c21d
+                    )
+                    embed_item.add_field(name="Estoque", value=item["stock"])
+                    embed_item.add_field(name="Preço", value=f"{price}:drop_of_blood: ")
+                    if item["role"]:
+                        embed_item.add_field(name="Cargo", value=f'<@&{item["role"]}>')
+                    elif item["img"]:
+                        embed_item.set_image(url=item["img"])
+                    embed_item.add_field(name="Comando para comprar", value=f'`{prefix}comprar {item["cmd"]}`', inline=False)
+                    embed_item.set_footer(text='Kivida Bot')
+                    await ctx.send(embed=embed_item)
+                else:
+                    await ctx.send("Item não encontrado")
+                    return
 
     @commands.bot_has_permissions(manage_roles=True)
     @commands.command()
     async def comprar(self, ctx, *, arg):
-        try:
-            item = get_item(arg.lower(), field="cmd")
-            if item["stock"] != "ilimitado":
-                if item["stock"] == "0":
-                    await ctx.send("Esse produto não possui mais estoque.")
-                    return
-                stock = int(item["stock"])
-                item["stock"] = str(stock-1)
-                edit_item(item["name"], "stock", item["stock"])
-            
-            if item["img"]:
-                capas = get_user_capas(ctx.author.id)
-                possui = item["name"] in capas
-                if not possui:
-                    if find_capa(arg.lower()):
-                        if remove_money(ctx.author.id, item["price"]):
-                            response = add_capa(ctx.author.id, item["cmd"])
-                            if response == True:
-                                await ctx.send("Capa comprada com sucesso.")
-                                return
+        if ctx.channel.id in self.channels:
+            try:
+                item = get_item(arg.lower(), field="cmd")
+                if item["stock"] != "ilimitado":
+                    if item["stock"] == "0":
+                        await ctx.send("Esse produto não possui mais estoque.")
+                        return
+                    stock = int(item["stock"])
+                    item["stock"] = str(stock-1)
+                    edit_item(item["name"], "stock", item["stock"])
+                
+                if item["img"]:
+                    capas = get_user_capas(ctx.author.id)
+                    possui = item["name"] in capas
+                    if not possui:
+                        if find_capa(arg.lower()):
+                            if remove_money(ctx.author.id, item["price"]):
+                                response = add_capa(ctx.author.id, item["cmd"])
+                                if response == True:
+                                    await ctx.send("Capa comprada com sucesso.")
+                                    return
+                                else:
+                                    await ctx.send(response)
+                                    return
                             else:
-                                await ctx.send(response)
+                                await ctx.send("Você não tem kivs suficiente.")
                                 return
                         else:
-                            await ctx.send("Você não tem diamantes suficiente.")
+                            await ctx.send(f"Capa não encontrada.")
                             return
                     else:
-                        await ctx.send(f"Capa não encontrada.")
+                        await ctx.send(f"Você já comprou esta capa. Veja em {prefix}capas")
                         return
-                else:
-                    await ctx.send(f"Você já comprou esta capa. Veja em {prefix}capas")
-                    return
 
-            elif item["role"] and item["cmd"] not in ["vip 7", "vip 15", "vip 30"]:
+                elif item["role"] and item["cmd"] not in ["vip 7", "vip 15", "vip 30"]:
+                        if remove_money(ctx.author.id, item["price"]):
+                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
+                            member = ctx.guild.get_member(ctx.author.id)
+                            await member.add_roles(role)
+                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                        else:
+                            await ctx.send("Você não tem kivs suficiente.")
+                            return
+                elif item["role"] and item["cmd"] in ["vip 7", "vip 15", "vip 30"]:
+                    if item["cmd"] == "vip 7":
+                        if remove_money(ctx.author.id, item["price"]):
+                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
+                            member = ctx.guild.get_member(ctx.author.id)
+                            insert_vip(ctx.author.id, 7)
+                            await member.add_roles(role)
+                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                        else:
+                            await ctx.send("Você não tem kivs suficiente.")
+                    elif item["cmd"] == "vip 15":
+                        if remove_money(ctx.author.id, item["price"]):
+                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
+                            member = ctx.guild.get_member(ctx.author.id)
+                            insert_vip(ctx.author.id, 15)
+                            await member.add_roles(role)
+                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                        else:
+                            await ctx.send("Você não tem kivs suficiente.")
+                    elif item["cmd"] == "vip 30":
+                        if remove_money(ctx.author.id, item["price"]):
+                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
+                            member = ctx.guild.get_member(ctx.author.id)
+                            insert_vip(ctx.author.id, 30)
+                            await member.add_roles(role)
+                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                        else:
+                            await ctx.send("Você não tem kivs suficiente.")
+                elif item["cmd"] == "sonhos 10k":
                     if remove_money(ctx.author.id, item["price"]):
-                        role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                        member = ctx.guild.get_member(ctx.author.id)
-                        await member.add_roles(role)
-                        await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                        await ctx.send("Você receberá 10k de sonhos @")
                     else:
-                        await ctx.send("Você não tem diamantes suficiente.")
-                        return
-            elif item["role"] and item["cmd"] in ["vip 7", "vip 15", "vip 30"]:
-                if item["cmd"] == "vip 7":
-                    if remove_money(ctx.author.id, item["price"]):
-                        role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                        member = ctx.guild.get_member(ctx.author.id)
-                        insert_vip(ctx.author.id, 7)
-                        await member.add_roles(role)
-                        await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
-                    else:
-                        await ctx.send("Você não tem diamantes suficiente.")
-                elif item["cmd"] == "vip 15":
-                    if remove_money(ctx.author.id, item["price"]):
-                        role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                        member = ctx.guild.get_member(ctx.author.id)
-                        insert_vip(ctx.author.id, 15)
-                        await member.add_roles(role)
-                        await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
-                    else:
-                        await ctx.send("Você não tem diamantes suficiente.")
-                elif item["cmd"] == "vip 30":
-                    if remove_money(ctx.author.id, item["price"]):
-                        role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                        member = ctx.guild.get_member(ctx.author.id)
-                        insert_vip(ctx.author.id, 30)
-                        await member.add_roles(role)
-                        await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
-                    else:
-                        await ctx.send("Você não tem diamantes suficiente.")
-            elif item["cmd"] == "sonhos 10k":
-                if remove_money(ctx.author.id, item["price"]):
-                    await ctx.send("Você receberá 10k de sonhos @")
-                else:
-                    await ctx.send("Você não tem diamantes suficiente.")
+                        await ctx.send("Você não tem kivs suficiente.")
 
-        except:
-           await ctx.send(f"Não encontrei esse item. Use {prefix}loja")
+            except:
+                await ctx.send(f"Não encontrei esse item. Use {prefix}loja")
 
 
 

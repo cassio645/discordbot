@@ -23,6 +23,10 @@ def add_limit(user_id):
     if collection.find_one({"_id": user_id}):
         user = collection.find_one({"_id": user_id})
         if user["guess_limit"] < 5:
+            if user["guess_time"] == 0:
+                newvalues = { "$set": { "guess_time":  datetime.now(), "guess_limit": 1} }
+                collection.update_one(user, newvalues)
+                return True
             cd = user["guess_time"] + timedelta(hours=1)
             if cd < datetime.now():
                 newvalues = { "$set": { "guess_time":  datetime.now(), "guess_limit": 1} }
@@ -56,6 +60,10 @@ def add_aposta(user_id):
     if collection.find_one({"_id": user_id}):
         user = collection.find_one({"_id": user_id})
         if user["aposta_limit"] < 5:
+            if user["aposta_time"] == 0:
+                newvalues = { "$set": { "aposta_time":  datetime.now(), "aposta_limit": 1} }
+                collection.update_one(user, newvalues)
+                return True
             cd = user["aposta_time"] + timedelta(hours=1)
             if cd < datetime.now():
                 newvalues = { "$set": { "aposta_time":  datetime.now(), "aposta_limit": 1} }
@@ -65,6 +73,8 @@ def add_aposta(user_id):
             newvalues = { "$set": { "aposta_time":  datetime.now(), "aposta_limit": limit} }
             collection.update_one(user, newvalues)
             return True
+        else:
+            return check_guess_cooldown(user_id)
     else:
         new_user_cooldown(user_id, aposta_time=datetime.now(), aposta_limit=1)
         return True          

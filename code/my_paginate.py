@@ -112,7 +112,7 @@ def create_rank(dates, my_key, num=1):
         elif my_key == 'money':
             rank_ordenado = ''
             for item in dates:
-                rank_ordenado += str(f'**{num}.** <@{item["_id"]}>\t\t**{pass_to_money(item["money"])}<:diamantt:973404655050719232>**\n')
+                rank_ordenado += str(f'**{num}.** <@{item["_id"]}>\t\t**{pass_to_money(item["money"])}:drop_of_blood: **\n')
                 num += 1
         elif my_key == "rep":
             rank_ordenado = ''
