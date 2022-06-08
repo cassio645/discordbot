@@ -15,10 +15,6 @@ class Game(commands.Cog):
         self.bot = bot
         self.channels = [982321966268686407, 982321436469362778, 982321475996504084, 977271218757570611, 944649962686386256, 883810728140734506]
         # public self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
-        
-    
-    def is_channel(self, ctx):
-        return ctx.channel.id == self.channel
 
 
     @commands.command(name="guess", aliases=["adv", "adivinhar", "adivinha", "chuta", "chutar"], )
@@ -41,7 +37,7 @@ class Game(commands.Cog):
                 chute_1 = pass_to_num(response.content)
                 if chute_1:
                     if int(chute_1) == num:
-                        await ctx.send(f"Parabéns <@{ctx.author.id}> você acertou. Chance(1/4)\nVocê recebeu 5.000:drop_of_blood: ")
+                        await ctx.send(f"Parabéns :tada: :tada: :tada: <@{ctx.author.id}> você acertou. Chance(1/4)\n**Você recebeu 5.000:drop_of_blood: **")
                         add_money(ctx.author.id, 5000)
                         return
                     elif int(chute_1) > num:
@@ -56,7 +52,7 @@ class Game(commands.Cog):
                 chute_2 = pass_to_num(response.content)
                 if chute_2:
                     if int(chute_2) == num:
-                        await ctx.send(f"Parabéns <@{ctx.author.id}> você acertou. Chance(2/4)\nVocê recebeu 3.000:drop_of_blood: ")
+                        await ctx.send(f"Parabéns :tada: :tada: :tada: <@{ctx.author.id}> você acertou. Chance(2/4)\n**Você recebeu 3.000:drop_of_blood: **")
                         add_money(ctx.author.id, 3000)
                         return
                     elif int(chute_2) > num:
@@ -71,7 +67,7 @@ class Game(commands.Cog):
                 chute_3 = pass_to_num(response.content)
                 if chute_3:
                     if int(chute_3) == num:
-                        await ctx.send(f"Parabéns <@{ctx.author.id}> você acertou. Chance(3/4)\nVocê recebeu 2.000:drop_of_blood: ")
+                        await ctx.send(f"Parabéns :tada: :tada: :tada: <@{ctx.author.id}> você acertou. Chance(3/4)\n**Você recebeu 2.000:drop_of_blood: **")
                         add_money(ctx.author.id, 2000)
                         return
                     elif int(chute_3) > num:
@@ -85,11 +81,11 @@ class Game(commands.Cog):
                 response = await self.bot.wait_for("message", check=check, timeout=30)
                 chute_4 = pass_to_num(response.content)
                 if chute_4 and int(chute_4) == num:
-                    await ctx.send(f"Parabéns <@{ctx.author.id}> você acertou. Chance(4/4)\nVocê recebeu 1.000:drop_of_blood: ")
+                    await ctx.send(f"Parabéns :tada: :tada: :tada: <@{ctx.author.id}> você acertou. Chance(4/4)\n**Você recebeu 1.000:drop_of_blood: **")
                     add_money(ctx.author.id, 1000)
                     return
                 else:
-                    await ctx.send(f"O número era {num}. Você perdeu <@{ctx.author.id}>.")
+                    await ctx.send(f"Era **{num}**. Você perdeu <@{ctx.author.id}>.")
                     return
             else:
                 await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")

@@ -57,6 +57,7 @@ class Rank(commands.Cog):
     async def on_message(self, ctx):
         user_id = ctx.author.id
         if ctx.author.bot: return
+        #if user_id: return
         xp = randint(1, 5)
         if collection.find_one({"_id": user_id}):
             user = collection.find_one({"_id": user_id})

@@ -36,7 +36,7 @@ class Casino(commands.Cog):
     
     # raspadinha
     @commands.command()
-    @cooldown(1, 5, BucketType.user)
+    @cooldown(1, 30, BucketType.user)
     async def raspadinha(self, ctx, *, args='.'):
         if((ctx.channel.id) in self.channels):
             if args.lower() == "comprar" or args.lower() == "compra":
@@ -99,7 +99,11 @@ class Casino(commands.Cog):
     @raspadinha.error
     async def raspadinha_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(f'Você deve esperar alguns segundos para comprar novamante.')
+            seconds_input = error.retry_after
+            convert = time.strftime("%H:%M:%S", time.gmtime(seconds_input))
+            horario = (convert.replace(":", ""))
+			# convertendo o tempo que falta para dar 1hr
+            await ctx.send(f'Você deve esperar **{convert[-2:]}s** para jogar novamemte.')
    
 
     # slot-machine
