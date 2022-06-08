@@ -15,7 +15,7 @@ class Economy(commands.Cog):
 		self.bot = bot
 		self.channels = all_channels()
 
-	@commands.command(name="balance", aliases=["diamantes", "money", "cash", "bal", "dinheiro", "kivs"])
+	@commands.command(name="balance", aliases=["diamantes", "money", "cash", "bal", "dinheiro", "kivs", "atm"])
 	async def balance(self, ctx):
 		if ctx.channel.id in self.channels:
 			dinheiro = get_balance(ctx.author.id)

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 from decouple import config
 from pymongo.errors import DuplicateKeyError
-from code.funcoes import get_prefix, get_days, find_capa
+from code.funcoes import get_prefix, get_days, find_capa, find_cor
 
 
 MONGO_TOKEN = config('MONGO_TOKEN')
@@ -15,12 +15,16 @@ collection = db["users"]
 prefix = get_prefix()
 
 # --------------- Adiciona um novo usuário ----------------
-def add_new_user(user_id, money=0, c4=0, vip=0, daily=0, rep=0, cdrep=0, status=None):
+def add_new_user(user_id, money=0, c4=0, vip=0, daily=0, rep=0, cdrep=0, status=None, cor=None):
     user_capas = ["default"]
+    cores = []
+    if cor:
+        cores[cor]
     if status == None:
         status = f"Use {prefix}status <frase> para alterar aqui..."
-    dados = {"_id": user_id, "money": money, "c4": c4, "vip": vip, "daily": daily, "rep": rep, "cdrep": cdrep, "status": status, "user_capas": user_capas, "capa": "default.png"}
+    dados = {"_id": user_id, "money": money, "c4": c4, "vip": vip, "daily": daily, "rep": rep, "cdrep": cdrep, "status": status, "user_capas": user_capas, "capa": "default.png", "user_cores": cores}
     collection.insert_one(dados)
+
 
 
 
@@ -33,7 +37,7 @@ def get_user(user_id):
     except:
         return False
 
-def get_time_rep(user_id):
+def get_time_rep_and_add(user_id):
     """ verifica se passou 1h desde a ultima rep, se a pessoa nunca deu rep "0" ou n tem perfilfica com a hr atual e retorna True. Se ainda nao passou 1h retorna o tempo que falta.
     """
     if collection.find_one({"_id": user_id}):
@@ -54,6 +58,18 @@ def get_time_rep(user_id):
         add_new_user(user_id, cdrep=datetime.now())
         return True
 
+def get_time_rep(user_id):
+    #apenas pega o tempo de rep
+    if collection.find_one({"_id": user_id}):
+        user = collection.find_one({"_id": user_id})
+        cd = user["cdrep"]
+        if user["cdrep"] == 0 or (cd <= datetime.now()):
+            return True
+        return str(cd - datetime.now())[2:7]
+    else:
+        return True
+
+
 def add_rep(user_id):
     # adiciona mais 1 no numero de rep da pessoa, se ela n tem perfil cria com 1 rep
     if collection.find_one({"_id": user_id}):
@@ -64,6 +80,13 @@ def add_rep(user_id):
     else:
         add_new_user(user_id, rep=1)
 
+def get_user_cores(user_id):
+    # pega a lista de capas de um usuário
+    if collection.find_one({"_id": user_id}):
+        user = collection.find_one({"_id": user_id})
+        return user["user_cores"]
+    return False
+
 def get_user_capas(user_id):
     # pega a lista de capas de um usuário
     if collection.find_one({"_id": user_id}):
@@ -71,12 +94,28 @@ def get_user_capas(user_id):
         return user["user_capas"]
     return False
 
+def set_cor(user_id, cor):
+    # seleciona a cor que ele quer usar
+    user = collection.find_one({"_id": user_id})
+    newvalues = { "$set": { "cor":  cor} }
+    collection.update_one(user, newvalues)
 
 def set_capa(user_id, capa):
     # seleciona a capa que ele quer usar
     user = collection.find_one({"_id": user_id})
     newvalues = { "$set": { "capa":  capa} }
     collection.update_one(user, newvalues)
+
+
+def add_cor(user_id, cor):
+    # adiciona uma cor na lista de cores do user
+    user = collection.find_one({"_id": user_id})
+    cor = find_cor(cor)
+    if cor:
+        collection.update_one(user,{"$push": {"user_cores": cor}})
+        return True
+    else:
+        return "Cor não encontrada."
 
 
 def add_capa(user_id, capa):
@@ -210,3 +249,15 @@ def delete_data(user_id):
 		collection.delete_one({"_id": user_id})
 	except:
 		pass
+
+"""
+def add_new_field():
+    novo = {"user_cores": [], "cor": None}
+
+    myquery = { "_id": { "$gt": 0} }
+    newvalues = { "$set":  novo}
+    collection.update_many(myquery, newvalues)
+    return True
+
+
+"""

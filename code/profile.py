@@ -1,12 +1,14 @@
 import discord
 from io import BytesIO
 import textwrap as tr
+from discord.utils import get
 from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType
 from PIL import Image, ImageChops, ImageDraw, ImageFont
-from db.mydb import get_user, get_time_rep, add_rep, get_user_capas, set_capa, set_status
-from code.funcoes import get_prefix, pass_to_date, pass_to_money, find_capa, get_id, all_channels
+from db.mydb import get_user, get_time_rep_and_add, add_rep, get_user_capas, set_capa, set_status, get_user_cores, set_cor
+from code.funcoes import get_prefix, pass_to_date, pass_to_money, find_capa, get_id, all_channels, find_cor
 from .rank_xp import get_xp_user
+from .asserts import lista_de_cores
 
 prefix = get_prefix()
 
@@ -104,7 +106,7 @@ class Information(commands.Cog):
                 member = get_id(member)
                 user = ctx.guild.get_member(member)
                 if user and ctx.author.id != user.id and not(user.bot):
-                    response = get_time_rep(ctx.author.id)
+                    response = get_time_rep_and_add(ctx.author.id)
                     if response == True:
                         add_rep(user.id)
                         await ctx.send(f"{ctx.author} acaba de dar uma rep para {user}")
@@ -112,9 +114,31 @@ class Information(commands.Cog):
                         await ctx.send(f'Você precisa esperar mais {response[:2]}m {response[3:]}s')
             except:
                 return
-        
-    @commands.command()
-    async def usar(self, ctx, *, arg):
+
+    @commands.command(name="usar_cor", aliases=["usar-cor", "usa-cor"])
+    async def usar_cor(self, ctx, *, arg):
+        if ctx.channel.id in self.channels:
+            cor = find_cor(str(arg))
+            user_cores = get_user_cores(ctx.author.id)
+            if user_cores and cor:
+                for i in user_cores:
+                    if i == cor:
+                        member = ctx.guild.get_member(ctx.author.id)
+                        for role in lista_de_cores:
+                            role_get = get(member.guild.roles, id=role)
+                            await member.remove_roles(role_get)
+                        cor_nova = ctx.guild.get_role(cor)
+                        await member.add_roles(cor_nova)
+                        await ctx.send("cor alterada com sucesso.")
+                        return
+            elif not cor:
+                await ctx.send(f"Não encontrei essa cor. Use {prefix}cores e veja se ela faz parte das suas cores.")
+            elif not user_cores:
+                await ctx.send("Você ainda não comprou nenhuma cor.")
+                
+                       
+    @commands.command(name="usar_capa", aliases=["usar-capa", "usa-capa"])
+    async def usar_capa(self, ctx, *, arg):
         if ctx.channel.id in self.channels:
             capa = find_capa(str(arg))
             user_capas = get_user_capas(ctx.author.id)
@@ -129,13 +153,26 @@ class Information(commands.Cog):
             elif not user_capas:
                 await ctx.send("Você ainda não comprou nenhuma capa.")
 
-
+    @commands.command(name="cores", aliases=["cor", "color"])
+    async def cores(self, ctx):
+        if ctx.channel.id in self.channels:
+            user_cores = get_user_cores(ctx.author.id)
+            description = f'**Para usar a cor utilize** `{prefix}usar-cor <nome>` **Não** precisa do @\n\n'
+            if len(user_cores) > 0:
+                user_cores.sort()
+                for x in user_cores:
+                    description += f"Nome: <@&{x}>\n"
+                embed_cores = discord.Embed(title=f"Cores de {ctx.author}", description=description, colour=0xFFD301)
+                await ctx.send(embed=embed_cores)
+            else:
+                embed_cores = discord.Embed(title=f"Cores de {ctx.author}", description=f"Você ainda não possui cores. Use `{prefix}loja`", colour=0xFFD301)
+                await ctx.send(embed=embed_cores)
 
     @commands.command(name="capas", aliases=["capa", "background", "wallpaper", "backgrounds", "wallpapers"])
     async def capas(self, ctx):
         if ctx.channel.id in self.channels:
             user_capas = get_user_capas(ctx.author.id)
-            description = f'**Para usar a capa utilize** `{prefix}usar <nome>`\n\n'
+            description = f'**Para usar a capa utilize** `{prefix}usar-capa <nome>`\n\n'
             if len(user_capas) > 1:
                 user_capas.sort()
                 for x in user_capas:

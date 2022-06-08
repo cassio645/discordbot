@@ -5,10 +5,13 @@ from discord.ext import commands
 from discord.ext.commands import cooldown,BucketType
 from discord.ext.commands import MemberConverter
 
-from .funcoes import get_prefix, all_channels
-from .my_paginate import paginate_rank
-from db.mydb import get_rank
+from .funcoes import get_prefix, all_channels, get_days
 from .rank_xp import get_xp_rank
+from .my_paginate import paginate_rank
+
+from db.mydb import get_rank, get_daily, get_time_rep
+from db.cooldown import get_cooldown_aposta, get_cooldown_guess
+
 
 prefix = get_prefix()
 
@@ -255,7 +258,7 @@ class GeneralCog(commands.Cog):
 	@commands.command()
 	async def rank(self, ctx, *, arg="."):
 		if ctx.channel.id in self.channels:
-			if arg.lower() in ["diamante", "diamantes", "money", "dinheiro, kivs, kivd"]:
+			if arg.lower() in ["diamante", "diamantes", "money", "kivs", "atm", "bal"]:
 				dados = get_rank("money")
 				embed1, embeds = paginate_rank(dados, len(dados), "Rank Kivis", my_key="money")
 				msg = await ctx.send(embed=embed1)
@@ -288,6 +291,38 @@ class GeneralCog(commands.Cog):
 		if ctx.channel.id in self.channels:
 			await ctx.send("https://cdn.discordapp.com/attachments/944649962686386256/983066514200616980/work.gif")
 			await ctx.send("Work, work, work, work,work, work\nHe said me haffi work, work, work, work, work, work")
+
+
+	@commands.command(name="cooldown", aliases=["cd", "tempo"])
+	async def cooldown(self, ctx):
+		if ctx.channel.id in self.channels:
+			today = get_days()
+			date = get_daily(ctx.author.id)
+			if date < today:
+				daily = ":white_check_mark: Você já pode pegar seu daily."
+			else:
+				daily = "Você já pegou seu daily hoje."
+			resp_rep = get_time_rep(ctx.author.id)
+			if resp_rep == True:
+				rep = ":white_check_mark: Você já pode dar rep."
+			else:
+				rep = f"Você deve esperar mais {resp_rep[:2]}m {resp_rep[3:]}s."
+			n_apostas, time_a = get_cooldown_aposta(ctx.author.id)
+			if n_apostas and time_a:
+				apostar = f"Apostas: {n_apostas}/5 | Tempo pra zerar: {time_a[:2]}m {time_a[3:]}s."
+			else:
+				apostar = f":white_check_mark: Apostas: 0/5 | Você já pode fazer apostas `{prefix}apostar`."
+			n_adivinhar, time_b = get_cooldown_guess(ctx.author.id)
+			if n_adivinhar and time_b:
+				adivinhar = f"Adivinhar: {n_adivinhar}/5 | Tempo pra zerar: {time_b[:2]}m {time_b[3:]}s."
+			else:
+				adivinhar = f":white_check_mark: Adivinhar: 0/5 | Você já pode adivinhar `{prefix}adivinhar`."
+			cd_embed = discord.Embed(
+				title=f"Cooldowns {ctx.author}",
+				 description=f"**Daily**\n{daily}\n\n**Rep**\n{rep}\n\n**Apostar**\n{apostar}\n\n**Adivinhar**\n{adivinhar}\n",
+				 colour=0xFFD301)
+			await ctx.send(embed=cd_embed)
+
 
 def setup(bot):
 	bot.add_cog(GeneralCog(bot))

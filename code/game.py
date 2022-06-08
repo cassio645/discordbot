@@ -2,6 +2,7 @@ import discord
 from random import randint
 from discord.ext import commands
 from db.cooldown import add_limit
+from discord.ext.commands import cooldown, BucketType
 from .funcoes import pass_to_num, get_prefix
 from db.mydb import add_money
 
@@ -12,8 +13,8 @@ class Game(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        #self.channels = [982321966268686407, 982321436469362778, 982321475996504084, 977271218757570611, 944649962686386256, 883810728140734506]
-        self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
+        self.channels = [982321966268686407, 982321436469362778, 982321475996504084, 977271218757570611, 944649962686386256, 883810728140734506]
+        # public self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
         
     
     def is_channel(self, ctx):
@@ -21,6 +22,7 @@ class Game(commands.Cog):
 
 
     @commands.command(name="guess", aliases=["adv", "adivinhar", "adivinha", "chuta", "chutar"], )
+    @cooldown(1, 8, BucketType.user)
     async def guess(self, ctx):
         
         if((ctx.channel.id) in self.channels):

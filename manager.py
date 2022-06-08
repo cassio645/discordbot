@@ -1,10 +1,13 @@
 import discord
-from discord.ext.commands.errors import CommandNotFound, MissingRequiredArgument, CommandOnCooldown, BadArgument, MissingPermissions, CommandInvokeError
+from discord.ext.commands.errors import CommandNotFound, MissingRequiredArgument, CommandOnCooldown, BadArgument, MissingPermissions
 from discord.ext import tasks
 from discord.ext import commands
+from discord.utils import get
 from db.mydb import delete_data, end_vip, get_all_vip
 from code.rank_xp import delete_xp
 from code.funcoes import get_days
+
+from code.asserts import lista_de_cores
 
 
 class Manager(commands.Cog):
@@ -35,8 +38,6 @@ class Manager(commands.Cog):
             pass
         elif isinstance(error, BadArgument):
             pass
-        elif isinstance(error, CommandInvokeError):
-            await ctx.send("Esse comando não é permitido aqui nesse canal.")
         elif isinstance(error, MissingPermissions):
             await ctx.send("Você não tem permissão para usar este comando.")
         else:
@@ -60,8 +61,10 @@ class Manager(commands.Cog):
                 end_vip(int(vip["_id"]))
                 member = guild.get_member(int(vip["_id"]))
                 await member.remove_roles(role)
+                for cor in lista_de_cores:
+                    cor_get = get(member.guild.roles, id=cor)
+                    await member.remove_roles(cor_get)
 
-    
 
 def setup(bot):
     bot.add_cog(Manager(bot))

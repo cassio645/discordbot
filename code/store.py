@@ -5,9 +5,9 @@ from discord.utils import get
 from discord.ext.commands.errors import MissingPermissions
 from EZPaginator import Paginator
 from time import sleep
-from db.mydb import get_all_vip, insert_vip, remove_money, end_vip, add_capa, get_user_capas
+from db.mydb import get_all_vip, insert_vip, remove_money, end_vip, add_capa, get_user_capas, add_cor, get_user_cores
 from db.storedb import add_item, get_all_items, get_item, edit_item, remove_item
-from .funcoes import pass_to_dict, pass_to_money, get_days, verify_role_or_id, remove_png, get_prefix, find_capa, all_channels
+from .funcoes import pass_to_dict, pass_to_money, get_days, verify_role_or_id, remove_png, get_prefix, find_capa, all_channels, find_cor
 from .my_paginate import paginate_store
 
 prefix = get_prefix()
@@ -43,6 +43,10 @@ class Store(commands.Cog):
         response = await self.bot.wait_for("message", check=check, timeout=30)
         price = response.content
 
+        await ctx.send('`Msg` **MUUITO IMPORTANTE**\nmsg após o usuario realizar a compra **(pq pode-se precisar marcar algum cargo de adm)**.')
+        response = await self.bot.wait_for("message", check=check, timeout=30)
+        msg = response.content
+
 
         await ctx.send("Sim ou Não. Ao comprar o item a pessoa deve receber algum cargo?")
         response = await self.bot.wait_for("message", check=check, timeout=30)
@@ -54,12 +58,12 @@ class Store(commands.Cog):
             if not role:
                await ctx.send("Falha no cadastro. Tente novamente.")
                return
-            if add_item(name, cmd, desc, stock, price, role):
+            if add_item(name, cmd, desc, stock, price, role, msg):
                 await ctx.send("Item adicionado com sucesso.")
             else:
                await ctx.send("Falha no cadastro. Tente novamente.")
                return
-        elif add_item(name, cmd, desc, stock, price):
+        elif add_item(name, cmd, desc, stock, price, msg):
             await ctx.send("Item adicionado com sucesso.")
         else:
             await ctx.send("Falha no cadastro. Tente novamente.")
@@ -184,7 +188,7 @@ class Store(commands.Cog):
                             if remove_money(ctx.author.id, item["price"]):
                                 response = add_capa(ctx.author.id, item["cmd"])
                                 if response == True:
-                                    await ctx.send("Capa comprada com sucesso.")
+                                    await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
                                     return
                                 else:
                                     await ctx.send(response)
@@ -203,8 +207,13 @@ class Store(commands.Cog):
                         if remove_money(ctx.author.id, item["price"]):
                             role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
                             member = ctx.guild.get_member(ctx.author.id)
-                            await member.add_roles(role)
-                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                            response = add_cor(ctx.author.id, item["cmd"])
+                            if response == True:
+                                    await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
+                                    return
+                            else:
+                                    await ctx.send(response)
+                                    return
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                             return
@@ -215,7 +224,7 @@ class Store(commands.Cog):
                             member = ctx.guild.get_member(ctx.author.id)
                             insert_vip(ctx.author.id, 7)
                             await member.add_roles(role)
-                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                     elif item["cmd"] == "vip 15":
@@ -224,7 +233,7 @@ class Store(commands.Cog):
                             member = ctx.guild.get_member(ctx.author.id)
                             insert_vip(ctx.author.id, 15)
                             await member.add_roles(role)
-                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                     elif item["cmd"] == "vip 30":
@@ -233,17 +242,17 @@ class Store(commands.Cog):
                             member = ctx.guild.get_member(ctx.author.id)
                             insert_vip(ctx.author.id, 30)
                             await member.add_roles(role)
-                            await ctx.send(f"Parabéns você acaba de comprar o cargo {role.name}")
+                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                 elif item["cmd"] == "sonhos 10k":
                     if remove_money(ctx.author.id, item["price"]):
-                        await ctx.send("Você receberá 10k de sonhos @")
+                        await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
                     else:
                         await ctx.send("Você não tem kivs suficiente.")
 
             except:
-                await ctx.send(f"Não encontrei esse item. Use {prefix}loja")
+               await ctx.send(f"Não encontrei esse item. Use {prefix}loja")
 
 
 

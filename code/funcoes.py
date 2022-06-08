@@ -8,12 +8,12 @@ from capas.all_capas import lista_de_capas
 locale.setlocale(locale.LC_ALL, '')
 
 def get_prefix():
-    return "k!"
+    return "!"
 
 def all_channels():
     # cassino, c4, games é diferente
-    return [983428794637488148, 983462889086124072, 983428734692503652, 968045281843220520, 968048613806723082, 982711181259210833, 981554796358152202, 976973013293604925]
-    #return [982321966268686407, 982321436469362778, 982321475996504084, 977271218757570611, 944649962686386256, 883810728140734506]
+    #publicreturn [983428794637488148, 983462889086124072, 983428734692503652, 968045281843220520, 968048613806723082, 982711181259210833, 981554796358152202, 976973013293604925]
+    return [982321966268686407, 982321436469362778, 982321475996504084, 977271218757570611, 944649962686386256, 883810728140734506]
 
 prefix = get_prefix()
 
@@ -61,10 +61,28 @@ def remove_png(name):
         name = name.replace(".png", "")
     return name
 
+def find_cor(name):
+    if "@" in name:
+        name = str(name.replace("@", ""))
+        if "<&" in name:
+            n = name.replace("<&", "")
+            name = n.replace(">", "")
+    print(name)
+    if name.lower() in ["cor vermelha", "vermelha", "vermelha", "977930579494469732"]:
+        return 977930579494469732
+    elif name.lower() in ["cor horrivel", "horrivel", "977932639912742922"]:
+        return 977932639912742922
+    elif name.lower() in ["cor preta", "cor preto", "preta", "preto", "940762975055249458"]:
+        return 940762975055249458
+    elif name.lower() in ["cor rosa", "rosa", "977930708188286986"]:
+        return 977930708188286986
+    else:
+        return False
+
 def find_capa(name):
     # recebe uma string e procura na lista de capas se ela existe
     for x in lista_de_capas:
-        if x[:8] in name:
+        if name in x[:8]:
             return(x)
     return False
 

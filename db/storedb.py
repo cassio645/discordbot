@@ -10,7 +10,7 @@ collection = db["store"]
 
 
 # ------------ Adiciona um novo item ------------------------
-def add_item(name:str, cmd:str, desc:str, stock:str, price:int, role=None, img=None) -> bool:
+def add_item(name:str, cmd:str, desc:str, stock:str, price:int, role=None, img=None, msg="") -> bool:
     try:
         dados = {
             "name": name,
@@ -19,7 +19,8 @@ def add_item(name:str, cmd:str, desc:str, stock:str, price:int, role=None, img=N
             "stock": stock,
             "price": int(price),
             "role": role,
-            "img": img
+            "img": img,
+            "msg": msg
         }
         collection.insert_one(dados)
         return True
