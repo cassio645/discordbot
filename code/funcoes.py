@@ -67,7 +67,6 @@ def find_cor(name):
         if "<&" in name:
             n = name.replace("<&", "")
             name = n.replace(">", "")
-    print(name)
     if name.lower() in ["cor vermelha", "vermelha", "vermelha", "977930579494469732"]:
         return 977930579494469732
     elif name.lower() in ["cor horrivel", "horrivel", "977932639912742922"]:

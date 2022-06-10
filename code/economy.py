@@ -33,9 +33,9 @@ class Economy(commands.Cog):
 				valor_daily = randint(1000, 3500)
 				if get_vip(ctx.author.id):
 					valor_daily += valor_daily
-					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily} :drop_of_blood: 2x por ser Vip :star2:", colour=0xFFD301)
+					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily}:drop_of_blood: 2x por ser Vip :star2:", colour=0xFFD301)
 				else:
-					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily} :drop_of_blood: ", colour=0xFFD301)
+					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily}:drop_of_blood: ", colour=0xFFD301)
 				add_daily(ctx.author.id, money=valor_daily, daily=today)
 				await ctx.send(embed=daily_embed)
 			else:
