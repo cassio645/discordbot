@@ -139,7 +139,7 @@ def paginate_store(volume, size, embed_title):
         colour=0xFFD301)
     for i in items:
         if '.png' in i['name']:
-            name = "Capa " + i['name'].replace(".png", "")
+            name = i['name'].replace(".png", "")
         else:
             name = i["name"]
         embed_1.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
@@ -157,7 +157,7 @@ def paginate_store(volume, size, embed_title):
         for i in items:
             name = i["name"]
             if '.png' in i['name']:
-                name = "Capa " + i['name'].replace(".png", "")
+                name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
             embed_2.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
@@ -175,7 +175,7 @@ def paginate_store(volume, size, embed_title):
         for i in items:
             name = i["name"]
             if '.png' in i['name']:
-                name = "Capa " + i['name'].replace(".png", "")
+                name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
             embed_3.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
@@ -192,7 +192,7 @@ def paginate_store(volume, size, embed_title):
         for i in items:
             name = i["name"]
             if '.png' in i['name']:
-                name = "Capa " + i['name'].replace(".png", "")
+                name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
             embed_4.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
@@ -209,7 +209,7 @@ def paginate_store(volume, size, embed_title):
         for i in items:
             name = i["name"]
             if '.png' in i['name']:
-                name = "Capa " + i['name'].replace(".png", "")
+                name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
             embed_5.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
@@ -226,7 +226,7 @@ def paginate_store(volume, size, embed_title):
         for i in items:
             name = i["name"]
             if '.png' in i['name']:
-                name = "Capa " + i['name'].replace(".png", "")
+                name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
             embed_6.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)

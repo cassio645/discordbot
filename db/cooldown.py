@@ -9,7 +9,7 @@ from code.funcoes import get_prefix, get_days, find_capa
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Discord"]
+db = cluster["Kivida"]
 collection = db["cooldown"]
 
 prefix = get_prefix()

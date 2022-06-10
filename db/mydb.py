@@ -9,7 +9,7 @@ from code.funcoes import get_prefix, get_days, find_capa, find_cor
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Discord"]
+db = cluster["Kivida"]
 collection = db["users"]
 
 prefix = get_prefix()
@@ -260,12 +260,11 @@ def delete_data(user_id):
 
 """
 def add_new_field():
-    novo = {"user_cores": [], "cor": None}
+    novo = {"user_cores": []}
 
     myquery = { "_id": { "$gt": 0} }
     newvalues = { "$set":  novo}
     collection.update_many(myquery, newvalues)
     return True
-
 
 """

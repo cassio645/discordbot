@@ -132,9 +132,21 @@ class Store(commands.Cog):
                 msg = await ctx.send(embed=embed1)
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
-            elif arg.lower() in ["capa", "capas"]:
+            elif arg.lower() in ["capa", "capas", "de capa", "de capas", "background"]:
                 items = get_all_items("capas")
                 embed1, embeds = paginate_store(items, len(items), "de Capas")
+                msg = await ctx.send(embed=embed1)
+                page = Paginator(bot=self.bot, message=msg, embeds=embeds)
+                await page.start()
+            elif arg.lower() in ["cor", "cores", "de cor", "de cores"]:
+                items = get_all_items("cor")
+                embed1, embeds = paginate_store(items, len(items), "de Cores")
+                msg = await ctx.send(embed=embed1)
+                page = Paginator(bot=self.bot, message=msg, embeds=embeds)
+                await page.start()
+            elif arg.lower() in ["outro", "outros", "de outros", "de outro"]:
+                items = get_all_items("outro")
+                embed1, embeds = paginate_store(items, len(items), " Vip e outros")
                 msg = await ctx.send(embed=embed1)
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
@@ -188,7 +200,7 @@ class Store(commands.Cog):
                             if remove_money(ctx.author.id, item["price"]):
                                 response = add_capa(ctx.author.id, item["cmd"])
                                 if response == True:
-                                    await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
+                                    await ctx.send(f"{item['msg'].capitalize()}")
                                     return
                                 else:
                                     await ctx.send(response)
@@ -203,13 +215,13 @@ class Store(commands.Cog):
                         await ctx.send(f"Você já comprou esta capa. Veja em {prefix}capas")
                         return
 
-                elif item["role"] and item["cmd"] not in ["vip 7", "vip 15", "vip 30"]:
+                elif item["role"] and item["cmd"] not in ["vip"]:
                         if remove_money(ctx.author.id, item["price"]):
                             role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
                             member = ctx.guild.get_member(ctx.author.id)
                             response = add_cor(ctx.author.id, item["cmd"])
                             if response == True:
-                                    await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
+                                    await ctx.send(f"{item['msg'].capitalize()}")
                                     return
                             else:
                                     await ctx.send(response)
@@ -217,37 +229,18 @@ class Store(commands.Cog):
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                             return
-                elif item["role"] and item["cmd"] in ["vip 7", "vip 15", "vip 30"]:
-                    if item["cmd"] == "vip 7":
-                        if remove_money(ctx.author.id, item["price"]):
-                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                            member = ctx.guild.get_member(ctx.author.id)
-                            insert_vip(ctx.author.id, 7)
-                            await member.add_roles(role)
-                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
-                        else:
-                            await ctx.send("Você não tem kivs suficiente.")
-                    elif item["cmd"] == "vip 15":
-                        if remove_money(ctx.author.id, item["price"]):
-                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                            member = ctx.guild.get_member(ctx.author.id)
-                            insert_vip(ctx.author.id, 15)
-                            await member.add_roles(role)
-                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
-                        else:
-                            await ctx.send("Você não tem kivs suficiente.")
-                    elif item["cmd"] == "vip 30":
+                elif item["role"] and item["cmd"] in ["vip" "cargo vip"]:
                         if remove_money(ctx.author.id, item["price"]):
                             role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
                             member = ctx.guild.get_member(ctx.author.id)
                             insert_vip(ctx.author.id, 30)
                             await member.add_roles(role)
-                            await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
+                            await ctx.send(f"{item['msg'].capitalize()}")
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                 elif item["cmd"] == "sonhos 10k":
                     if remove_money(ctx.author.id, item["price"]):
-                        await ctx.send(f"{item['msg'].capitalize().replace('{prefix}', f'{prefix}')}")
+                        await ctx.send(f"{item['msg'].capitalize()}")
                     else:
                         await ctx.send("Você não tem kivs suficiente.")
 

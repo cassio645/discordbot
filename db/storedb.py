@@ -5,7 +5,7 @@ from pymongo.errors import DuplicateKeyError
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Discord"]
+db = cluster["Kivida"]
 collection = db["store"]
 
 
@@ -63,10 +63,24 @@ def get_all_items(query=None):
         registers = list()
         for x in collection.find().sort("name", 1):
             registers.append(x)
-    else:
+    elif query == "capas":
         registers = list()
-        for x in collection.find({"img": { "$regex": "^http" }}).sort("name", 1):
+        for x in collection.find({"name": { "$regex": "^capa" }}).sort("name", 1):
             registers.append(x)
-
+    elif query == "cores":
+        for x in collection.find({"name": { "$regex": "^cor" }}).sort("name", 1):
+            registers.append(x)
+    elif query == "outro":
+        for x in collection.find({"name": { "$not": { "$regex": "^cor", "$regex": "^capa" }}}).sort("name", 1):
+            registers.append(x)
     return registers
 
+"""
+def add_new_field():
+    novo = {"msg": "capa comprada com sucesso. Use `k!capas`"}
+
+    myquery = { "price": { "$gt": 0} }
+    newvalues = { "$set":  novo}
+    collection.update_many(myquery, newvalues)
+    return True
+"""

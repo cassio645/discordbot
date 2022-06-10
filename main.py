@@ -6,7 +6,7 @@ from discord.ext import commands
 intents = Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents, strip_after_prefix=True)
+bot = commands.Bot(command_prefix='k!', case_insensitive=True, intents=intents, strip_after_prefix=True)
 bot.remove_command('help')
 
 bot.load_extension("manager")

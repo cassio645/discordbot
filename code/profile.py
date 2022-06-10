@@ -54,7 +54,7 @@ class Information(commands.Cog):
                 sobremim = "\n".join(frase)
                 vip = pass_to_date(info["vip"])
                 vits = str(info["c4"]) + " Vitórias"
-                user_bg = str(info["capa"])  
+                user_bg = str(info["capa"].replace("capa", ""))  
             else:
                 money, rep, vits, vip = "0", "0 Reps", "0 Vitórias", "-"
                 frase = tr.wrap(f"Use {prefix}status <frase> para alterar aqui", width=60)
