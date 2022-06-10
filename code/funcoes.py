@@ -68,22 +68,34 @@ def find_cor(name):
         if "<&" in name:
             n = name.replace("<&", "")
             name = n.replace(">", "")
-    if name.lower() in ["cor slateblue", "slateblue", "slate", "stateblue" "968054472230199326"]:
-        return 968054472230199326
-    elif name.lower() in ["cor citrino", "citrino", "968054381708726312"]:
-        return 968054381708726312
-    elif name.lower() in ["cor esmeralda", "esmeralda", "968054272568721419"]:
-        return 968054272568721419
-    elif name.lower() in ["cor cristal", "cristal", "968054200812597248"]:
-        return 968054200812597248
-    elif name.lower() in ["cor safira", "cor saphira", "safira", "saphira", "968053835593580544"]:
-        return 968053835593580544
-    elif name.lower() in ["cor quartzo", "quartzo", "968053796284559420"]:
-        return 968053796284559420
-    elif name.lower() in ["cor violet", "cor violeta", "violet", "violeta", "968053668630892574"]:
-        return 968053668630892574
+    if name.lower() in ["cor lizard", "lizard", "984796466579128330"]:
+        return 984796466579128330
+    elif name.lower() in ["cor ciano", "ciano", "984800368481435698"]:
+        return 984800368481435698
+    elif name.lower() in ["cor amethyst", "amethyst", "ametyst", "cor ametyst", "cor amethist", "amethist", "984797215715393546"]:
+        return 984797215715393546
+    elif name.lower() in ["cor blue", "blue", "984796289541742614"]:
+        return 984796289541742614
+    elif name.lower() in ["cor pink", "cor pinky", "pink", "pinky", "984796216263065669"]:
+        return 984796216263065669
+    elif name.lower() in ["cor amber", "amber", "984796054727852042"]:
+        return 984796054727852042
+    elif name.lower() in ["cor pantone", "cor panetone", "pantone", "panetone", "984796141952573440"]:
+        return 984796141952573440
     elif name.lower() in ["cor barbie", "barbie", "cor barbe", "barbe", "968053597952692264"]:
         return 968053597952692264
+    elif name.lower() in ["cor red", "red", "984796904573526026"]:
+        return 984796904573526026
+    elif name.lower() in ["cor crayola", "crayola", "984796377433407539"]:
+        return 984796377433407539
+    elif name.lower() in ["cor rosy", "rosy", "984797948405743657"]:
+        return 984797948405743657
+    elif name.lower() in ["cor powder", "powder", "cor power", "power", "984798122674913300"]:
+        return 984798122674913300
+    elif name.lower() in ["cor cream", "cream", " 984798336039125072"]:
+        return  984798336039125072
+    elif name.lower() in ["cor celadon", "celadon", "cor celadom", "celadom", "984798521599352863"]:
+        return 984798521599352863
     else:
         return False
 

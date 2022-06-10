@@ -115,6 +115,12 @@ class Information(commands.Cog):
             except:
                 return
 
+    @commands.command()
+    async def usar(self, ctx):
+        if ctx.channel.id in self.channels:
+            usar_embed = discord.Embed(title="Usar", description=f"`{prefix}usar-cor <nome>` Altera sua cor.\n`{prefix}usar-capa <nome>` Aletra sua capa.\n", colour=0xFFD301)
+            await ctx.send(embed=usar_embed)
+
     @commands.command(name="usar_cor", aliases=["usar-cor", "usa-cor"])
     async def usar_cor(self, ctx, *, arg):
         if ctx.channel.id in self.channels:
@@ -129,7 +135,7 @@ class Information(commands.Cog):
                             await member.remove_roles(role_get)
                         cor_nova = ctx.guild.get_role(cor)
                         await member.add_roles(cor_nova)
-                        await ctx.send("cor alterada com sucesso.")
+                        await ctx.send("Cor alterada com sucesso.")
                         return
             elif not cor:
                 await ctx.send(f"Não encontrei essa cor. Use {prefix}cores e veja se ela faz parte das suas cores.")
@@ -157,16 +163,17 @@ class Information(commands.Cog):
     async def cores(self, ctx):
         if ctx.channel.id in self.channels:
             user_cores = get_user_cores(ctx.author.id)
-            description = f'**Para usar a cor utilize** `{prefix}usar-cor <nome>` **Não** precisa do @\n\n'
+            description = f'**Para usar a cor utilize** `{prefix}usar-cor <nome>`\n**Não** precisa do @\n\n'
             if len(user_cores) > 0:
                 user_cores.sort()
                 for x in user_cores:
-                    description += f"Nome: <@&{x}>\n"
+                    description += f"<@&{x}>\n"
                 embed_cores = discord.Embed(title=f"Cores de {ctx.author}", description=description, colour=0xFFD301)
                 await ctx.send(embed=embed_cores)
             else:
                 embed_cores = discord.Embed(title=f"Cores de {ctx.author}", description=f"Você ainda não possui cores. Use `{prefix}loja`", colour=0xFFD301)
                 await ctx.send(embed=embed_cores)
+
 
     @commands.command(name="capas", aliases=["capa", "background", "wallpaper", "backgrounds", "wallpapers"])
     async def capas(self, ctx):

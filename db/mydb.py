@@ -112,7 +112,7 @@ def add_cor(user_id, cor):
     user = collection.find_one({"_id": user_id})
     cor = find_cor(cor)
     if cor:
-        collection.update_one(user,{"$push": {"user_cores": cor}})
+        collection.update_one(user, {"$push": {"user_cores": cor}})
         return True
     else:
         return "Cor não encontrada."
@@ -121,7 +121,6 @@ def add_cor(user_id, cor):
 def add_capa(user_id, capa):
     # adiciona uma nova capa na lista de capas do usuário
     user = collection.find_one({"_id": user_id})
-    user_capas = user["user_capas"]
     capa = find_capa(capa)
     if capa:
         collection.update_one(user,{"$push": {"user_capas": capa}})

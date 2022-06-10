@@ -24,7 +24,8 @@ class Manager(commands.Cog):
         print(f"{self.bot.user} is alive")
         guild = self.bot.get_guild(565635847508983808)
         role = guild.get_role(977695213457907763)
-        self.manage_vip.start(guild, role)
+        channel = self.bot.get_channel(968045281843220520)
+        self.manage_vip.start(guild, role, channel)
 
 
 
@@ -51,7 +52,7 @@ class Manager(commands.Cog):
         self.manage_vip.cancel()
 
     @tasks.loop(hours=12)
-    async def manage_vip(self, guild, role):
+    async def manage_vip(self, guild, role, channel):
         all_vips = get_all_vip()
         today = get_days()
         for vip in all_vips:
@@ -62,6 +63,7 @@ class Manager(commands.Cog):
                 #for cargo in cargos_exclusivos:
                  #   cargo_get = get(member.guild.roles, id=cargo)
                   #  await member.remove_roles(cargo_get)
+                await channel.send(f'{ctx.author} não é mais vip.')
 
 
 def setup(bot):

@@ -22,6 +22,7 @@ class HelpCog(commands.Cog):
 		comandos_embed = discord.Embed(
 				title = 'Comandos do Kivida Bot',
 				description=f'**ping**\nTempo de resposta do bot.\n**Modo de usar:** `{prefix}ping`\n\n'
+							f'**cd | cooldown**\nMostra o tempo de cooldown de alguns itens como daily, rep, adivinhar e apostas\n**Modo de usar:** `{prefix}cd`\n\n'
 							f'**avatar** | **av**\nMostra seu avatar ou do usuário mencionado\n**Modo de usar:** `{prefix}avatar <@membro | ID>`\n\n'
 							f'**userinfo | ui**\nMostra informações do usuário\n**Modo de usar:** `{prefix}userinfo <@membro | ID>`\n\n'
 							f'**serverinfo | si**\nMostra informações do servidor\n**Modo de usar:** `{prefix}serverinfo`\n\n'
@@ -37,7 +38,8 @@ class HelpCog(commands.Cog):
 			description=f'**perfil**\nMostra seu perfil com suas informações\n**Modo de usar:** `{prefix}perfil` | `{prefix}perfil <@membro | ID>`\n\n'
 						f'**status**\nAltera o status do seu perfil.\n**Modo de usar:** `{prefix}status <frase>`\n\n'
 						f'**capas**\nVeja as capas que você comprou na loja.\n**Modo de usar:** `{prefix}capas`\n\n'
-						f'**usar**\nAltera a capa do seu perfil.\n**Modo de usar:** `{prefix}usar <capa>`\n\n'
+						f'**usar-capa**\nAltera a capa do seu perfil.\n**Modo de usar:** `{prefix}usar-capa <nome>`\n\n'
+						f'**usar-cor**\nAltera a cor da sua letra no servidor.\n**Modo de usar:** `{prefix}usar-cor <nome>`\n\n'
 						f'**rep**\nEnvie uma reputação a um usuário\n**Modo de usar:** `{prefix}rep <@membro | ID>`\n\n'
 						f'**rank reps**\nVeja a lista das pessoas que mais receberam reps\n**Modo de usar:** `{prefix}rank reps`\n\n'
 						f'**rank xp**\nVeja as pessoas mais ativas do servidor\n**Modo de usar:** `{prefix}rank xp`\n\n',

@@ -58,12 +58,12 @@ class Store(commands.Cog):
             if not role:
                await ctx.send("Falha no cadastro. Tente novamente.")
                return
-            if add_item(name, cmd, desc, stock, price, role, msg):
+            if add_item(name, cmd, desc, stock, price, role, img=None, msg=msg):
                 await ctx.send("Item adicionado com sucesso.")
             else:
                await ctx.send("Falha no cadastro. Tente novamente.")
                return
-        elif add_item(name, cmd, desc, stock, price, msg):
+        elif add_item(name, cmd, desc, stock, price, img=None, msg=msg):
             await ctx.send("Item adicionado com sucesso.")
         else:
             await ctx.send("Falha no cadastro. Tente novamente.")
@@ -77,7 +77,7 @@ class Store(commands.Cog):
                 if msg.author == ctx.author:
                     return msg.content
             r = get_item(arg.lower())
-            item = f"name: {r['name']}\ncmd: {r['cmd']}\ndesc: {r['desc']}\nstock: {r['stock']}\nprice: {r['price']}\nrole: {r['role']}"
+            item = f"name: {r['name']}\ncmd: {r['cmd']}\ndesc: {r['desc']}\nstock: {r['stock']}\nprice: {r['price']}\nrole: {r['role']}\nmsg: {r['msg']}"
             await ctx.send(item)
             sleep(1)
             await ctx.send("\n**Mande o campo que você quer editar com o novo valor. (1 edit por vez)**\nEx: stock: 3")
@@ -87,7 +87,7 @@ class Store(commands.Cog):
                 if l == ':':
                     break
                 test += l
-            if test in ["name", "cmd", "desc", "stock", "price", "role"]:
+            if test in ["name", "cmd", "desc", "stock", "price", "role", "msg"]:
                 chave, valor = pass_to_dict(response.content)
                 if edit_item(arg, chave, valor):
                     await ctx.send("Alterações salvas com sucesso.")
@@ -123,9 +123,10 @@ class Store(commands.Cog):
 
 
         
-    @commands.command()
+    @commands.command(name="loja", aliases=["shop", "market", "lojas"])
     async def loja(self, ctx, arg=None):
         if ctx.channel.id in self.channels:
+            filtrado = []
             if arg is None:
                 items = get_all_items()
                 embed1, embeds = paginate_store(items, len(items), "Completa")
@@ -133,20 +134,29 @@ class Store(commands.Cog):
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
             elif arg.lower() in ["capa", "capas", "de capa", "de capas", "background"]:
-                items = get_all_items("capas")
-                embed1, embeds = paginate_store(items, len(items), "de Capas")
+                items = get_all_items()
+                for i in items:
+                    if "capa" in i["name"]:
+                        filtrado.append(i)
+                embed1, embeds = paginate_store(filtrado, len(filtrado), "de Capas")
                 msg = await ctx.send(embed=embed1)
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
             elif arg.lower() in ["cor", "cores", "de cor", "de cores"]:
-                items = get_all_items("cor")
-                embed1, embeds = paginate_store(items, len(items), "de Cores")
+                items = get_all_items()
+                for i in items:
+                    if "cor" in i["name"] and "discord" not in i["name"]:
+                        filtrado.append(i)
+                embed1, embeds = paginate_store(filtrado, len(filtrado), "de Cores")
                 msg = await ctx.send(embed=embed1)
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
             elif arg.lower() in ["outro", "outros", "de outros", "de outro"]:
-                items = get_all_items("outro")
-                embed1, embeds = paginate_store(items, len(items), " Vip e outros")
+                items = get_all_items()
+                for i in items:
+                    if "cor" not in i["name"] and "capa" not in i["name"]:
+                        filtrado.append(i)
+                embed1, embeds = paginate_store(filtrado, len(filtrado), "Vip e outros")
                 msg = await ctx.send(embed=embed1)
                 page = Paginator(bot=self.bot, message=msg, embeds=embeds)
                 await page.start()
@@ -179,7 +189,7 @@ class Store(commands.Cog):
                     return
 
     @commands.bot_has_permissions(manage_roles=True)
-    @commands.command()
+    @commands.command(name="comprar", aliases=["buy"])
     async def comprar(self, ctx, *, arg):
         if ctx.channel.id in self.channels:
             try:
@@ -200,7 +210,7 @@ class Store(commands.Cog):
                             if remove_money(ctx.author.id, item["price"]):
                                 response = add_capa(ctx.author.id, item["cmd"])
                                 if response == True:
-                                    await ctx.send(f"{item['msg'].capitalize()}")
+                                    await ctx.send(f"{item['msg']}")
                                     return
                                 else:
                                     await ctx.send(response)
@@ -221,7 +231,7 @@ class Store(commands.Cog):
                             member = ctx.guild.get_member(ctx.author.id)
                             response = add_cor(ctx.author.id, item["cmd"])
                             if response == True:
-                                    await ctx.send(f"{item['msg'].capitalize()}")
+                                    await ctx.send(f"{item['msg']}")
                                     return
                             else:
                                     await ctx.send(response)
@@ -229,18 +239,20 @@ class Store(commands.Cog):
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                             return
-                elif item["role"] and item["cmd"] in ["vip" "cargo vip"]:
+                elif item["role"] and item["cmd"] in ["vip", "cargo vip"]:
                         if remove_money(ctx.author.id, item["price"]):
                             role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
                             member = ctx.guild.get_member(ctx.author.id)
                             insert_vip(ctx.author.id, 30)
                             await member.add_roles(role)
-                            await ctx.send(f"{item['msg'].capitalize()}")
+                            await ctx.send(f"{item['msg']}")
+                            channel = self.bot.get_channel(968045281843220520)
+                            await channel.send(f'{ctx.author} se tornou vip.')
                         else:
                             await ctx.send("Você não tem kivs suficiente.")
                 elif item["cmd"] == "sonhos 10k":
                     if remove_money(ctx.author.id, item["price"]):
-                        await ctx.send(f"{item['msg'].capitalize()}")
+                        await ctx.send(f"{item['msg']}")
                     else:
                         await ctx.send("Você não tem kivs suficiente.")
 

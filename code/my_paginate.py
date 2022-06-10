@@ -135,16 +135,21 @@ def paginate_store(volume, size, embed_title):
     items = volume[:9]
     embed_1 = discord.Embed(
         title = "Loja " + embed_title,
-        description="Use os comandos de info para mais detalhes do item. ",
+        description=f"Use os comandos de info para mais detalhes do item.\n\n",
         colour=0xFFD301)
     for i in items:
         if '.png' in i['name']:
             name = i['name'].replace(".png", "")
         else:
             name = i["name"]
-        embed_1.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+        if i["role"]:
+            embed_1.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+        else:
+            embed_1.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
+    embed_1.add_field(name="Você pode filtrar", value=f"`{prefix}loja capas` | `{prefix}loja cores` | `{prefix}loja outros`")
     footer = f"Página 1 de {paginas}"
     embed_1.set_footer(text=footer)
+    embed_1.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
     embed_1.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
     lista_de_embed.append(embed_1)
     if size > 9:
@@ -155,15 +160,19 @@ def paginate_store(volume, size, embed_title):
             description="",
             colour=0xFFD301)
         for i in items:
-            name = i["name"]
             if '.png' in i['name']:
                 name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
-            embed_2.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+            if i["role"]:
+                embed_2.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+            else:
+                embed_2.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
+        
         footer = f"Página 2 de {paginas}"
         embed_2.set_footer(text=footer)
         embed_2.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
+        embed_2.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
         lista_de_embed.append(embed_2)
     if size > 18:
 
@@ -173,14 +182,17 @@ def paginate_store(volume, size, embed_title):
             description="",
             colour=0xFFD301)
         for i in items:
-            name = i["name"]
             if '.png' in i['name']:
                 name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
-            embed_3.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+            if i["role"]:
+                embed_3.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+            else:
+                embed_3.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
         footer = f"Página 3 de {paginas}"
         embed_3.set_footer(text=footer)
+        embed_3.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
         embed_3.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
         lista_de_embed.append(embed_3)
     if size > 27:
@@ -190,14 +202,17 @@ def paginate_store(volume, size, embed_title):
             description="",
             colour=0xFFD301)
         for i in items:
-            name = i["name"]
             if '.png' in i['name']:
                 name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
-            embed_4.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+            if i["role"]:
+                embed_4.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+            else:
+                embed_4.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
         footer = f"Página 4 de {paginas}"
         embed_4.set_footer(text=footer)
+        embed_4.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
         embed_4.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
         lista_de_embed.append(embed_4)
     if size > 36:
@@ -207,14 +222,17 @@ def paginate_store(volume, size, embed_title):
             description="",
             colour=0xFFD301)
         for i in items:
-            name = i["name"]
             if '.png' in i['name']:
                 name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
-            embed_5.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+            if i["role"]:
+                embed_5.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+            else:
+                embed_5.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
         footer = f"Página 5 de {paginas}"
         embed_5.set_footer(text=footer)
+        embed_5.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
         embed_5.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
         lista_de_embed.append(embed_5)
     if size > 45:
@@ -224,14 +242,17 @@ def paginate_store(volume, size, embed_title):
             description="",
             colour=0xFFD301)
         for i in items:
-            name = i["name"]
             if '.png' in i['name']:
                 name = i['name'].replace(".png", "")
             else:
                 name = i["name"]
-            embed_6.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=True)
+            if i["role"]:
+                embed_6.add_field(name=f"{name.capitalize()}", value=f"Cargo: <@&{i['role']}>\n`{prefix}info {i['cmd']}`\n", inline=False)
+            else:
+                embed_6.add_field(name=f"{name.capitalize()}", value=f"`{prefix}info {i['cmd']}`", inline=False)
         footer = f"Página 6 de {paginas}"
         embed_6.set_footer(text=footer)
+        embed_6.set_image(url="https://cdn.discordapp.com/attachments/979065286705700955/984818854993743982/standard.gif")
         embed_6.set_thumbnail(url="https://cdn.discordapp.com/attachments/883810728140734506/977984460081475675/istockphoto-1152401093-612x612.jpg")
         lista_de_embed.append(embed_6)
     return embed_1, lista_de_embed

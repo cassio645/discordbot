@@ -112,7 +112,7 @@ class Casino(commands.Cog):
         if((ctx.channel.id) in self.channels):
             arg = pass_to_num(arg)
             if (arg is False) or arg <= 0:
-                kivs_embed = discord.Embed(title="Apostar", description="Aposte para tentar aumentar seus kivs. Você pode apostar qualquer valor, até 5x por hora. Os prêmios serão multiplicações do valor que você apostar. Confira abaixo.", colour=0xFFD301)
+                kivs_embed = discord.Embed(title="Apostar", description=f"Aposte para tentar aumentar seus kivs. Você pode apostar qualquer valor, até 5x por hora. Os prêmios serão multiplicações do valor que você apostar. Confira abaixo.\n\n**Modo de usar:** {prefix}apostar <valor>\n", colour=0xFFD301)
                 kivs_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973589210097385512/banner.png")
                 kivs_embed.set_footer(text='Kivida Bot')
                 await ctx.send(embed=kivs_embed)
