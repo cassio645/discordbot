@@ -206,7 +206,8 @@ class Store(commands.Cog):
                     capas = get_user_capas(ctx.author.id)
                     possui = item["name"] in capas
                     if not possui:
-                        if find_capa(arg.lower()):
+                        capa = find_capa(arg.lower())
+                        if capa:
                             if remove_money(ctx.author.id, item["price"]):
                                 response = add_capa(ctx.author.id, item["cmd"])
                                 if response == True:

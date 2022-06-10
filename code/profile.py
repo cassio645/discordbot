@@ -184,7 +184,9 @@ class Information(commands.Cog):
                 user_capas.sort()
                 for x in user_capas:
                     if x not in "default.png":
-                        description += x.replace(".png", "\n")
+                        x = x.replace(".png", "\n")
+                        x = x.replace("capa", "")
+                        description += x
                 embed_capas = discord.Embed(title=f"Capas de {ctx.author}", description=description, colour=0xFFD301)
                 await ctx.send(embed=embed_capas)
             else:

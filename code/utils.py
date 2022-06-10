@@ -294,6 +294,7 @@ class GeneralCog(commands.Cog):
 
 
 	@commands.command(name="cooldown", aliases=["cd", "tempo"])
+	@cooldown(1, 10, BucketType.user)
 	async def cooldown(self, ctx):
 		if ctx.channel.id in self.channels:
 			today = get_days()

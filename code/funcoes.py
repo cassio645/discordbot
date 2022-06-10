@@ -101,10 +101,9 @@ def find_cor(name):
 
 def find_capa(name):
     # recebe uma string e procura na lista de capas se ela existe
-    if "capa" in name:
-        name = name.replace("capa", "")
+    name += '.png'
     for x in lista_de_capas:
-        if name in x[:8]:
+        if name in [x, x[:8]]:
             return(x)
     return False
 
