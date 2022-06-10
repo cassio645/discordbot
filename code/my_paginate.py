@@ -9,6 +9,8 @@ def paginate_rank(volume, size, embed_title, my_key):
     # faz a páginacao dos rank de dinheiro e c4
     lista_de_embed = []
     paginas = math.ceil(size/10)
+    if paginas > 10:
+        paginas = 10
     description_1 = volume[:10]
     embed_1 = discord.Embed(
         title = embed_title,

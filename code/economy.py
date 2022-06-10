@@ -3,7 +3,7 @@ import time
 from random import randint
 from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType
-from db.mydb import get_balance, add_money, get_daily, add_daily
+from db.mydb import get_balance, add_money, get_daily, add_daily, get_vip
 from .funcoes import pass_to_money, get_days, get_prefix, get_id, all_channels
 
 prefix = get_prefix()
@@ -30,8 +30,12 @@ class Economy(commands.Cog):
 			today = get_days()
 			date = get_daily(ctx.author.id)
 			if date < today:
-				valor_daily = randint(1000, 3550)
-				daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily} :drop_of_blood: ", colour=0xFFD301)
+				valor_daily = randint(1000, 3500)
+				if get_vip(ctx.author.id):
+					valor_daily += valor_daily
+					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily} :drop_of_blood: 2x por ser Vip :star2:", colour=0xFFD301)
+				else:
+					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily} :drop_of_blood: ", colour=0xFFD301)
 				add_daily(ctx.author.id, money=valor_daily, daily=today)
 				await ctx.send(embed=daily_embed)
 			else:

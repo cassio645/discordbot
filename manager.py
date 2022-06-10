@@ -38,8 +38,6 @@ class Manager(commands.Cog):
             pass
         elif isinstance(error, BadArgument):
             pass
-        elif isinstance(error, MissingPermissions):
-            await ctx.send("Você não tem permissão para usar este comando.")
         else:
             raise error
 

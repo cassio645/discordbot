@@ -156,6 +156,14 @@ def get_all_vip():
 		registers.append(x)
 	return registers
 
+def get_vip(user_id):
+    if collection.find_one({"_id": user_id}):
+        user = collection.find_one({"_id": user_id})
+        if user["vip"] > 0:
+            return True
+        else: return False
+    return False
+
 def end_vip(user_id):
     # finaliza o vip de um usuario
     user = collection.find_one({"_id": user_id}) 

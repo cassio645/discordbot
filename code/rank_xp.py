@@ -28,7 +28,7 @@ def level_up(user_id, level):
 def get_xp_rank():
     registers = list()
     # consulta o rank por completo e ordena pela ordem de xp
-    for i in collection.find().sort("xp", -1):
+    for i in collection.find({"level": {"$gt": 0}}).sort("level", -1):
         registers.append(i)
     return registers
 
