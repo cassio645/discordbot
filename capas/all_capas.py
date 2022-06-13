@@ -24,5 +24,8 @@ lista_de_capas = [
     "tanjiro nezuko.png",
     "triangle neon.png",
     "ultra pink.png", 
-    "logo akatsuki.png"
+    "logo akatsuki.png",
+    "malevoly.png",
+    "barbie.png",
+    "obito.png"
 ]

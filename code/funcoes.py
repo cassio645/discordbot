@@ -96,6 +96,8 @@ def find_cor(name):
         return  984798336039125072
     elif name.lower() in ["cor celadon", "celadon", "cor celadom", "celadom", "984798521599352863"]:
         return 984798521599352863
+    elif name.lower() in ["cor black", "black", "preto", "cor preto", "preta", "cor preta", "985256011243868190"]:
+        return 985256011243868190
     else:
         return False
 

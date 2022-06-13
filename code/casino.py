@@ -36,7 +36,7 @@ class Casino(commands.Cog):
     
     # raspadinha
     @commands.command()
-    @cooldown(1, 30, BucketType.user)
+    @cooldown(1, 15, BucketType.user)
     async def raspadinha(self, ctx, *, args='.'):
         if((ctx.channel.id) in self.channels):
             if args.lower() == "comprar" or args.lower() == "compra":

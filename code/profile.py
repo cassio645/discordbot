@@ -118,7 +118,7 @@ class Information(commands.Cog):
     @commands.command()
     async def usar(self, ctx):
         if ctx.channel.id in self.channels:
-            usar_embed = discord.Embed(title="Usar", description=f"`{prefix}usar-cor <nome>` Altera sua cor.\n`{prefix}usar-capa <nome>` Aletra sua capa.\n", colour=0xFFD301)
+            usar_embed = discord.Embed(title="Usar", description=f"`{prefix}usar-cor <nome>` Altera sua cor.\n`{prefix}usar-capa <nome>` Altera sua capa.\n", colour=0xFFD301)
             await ctx.send(embed=usar_embed)
 
     @commands.command(name="usar_cor", aliases=["usar-cor", "usa-cor"])
