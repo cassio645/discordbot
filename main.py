@@ -19,6 +19,7 @@ bot.load_extension("code.casino")
 bot.load_extension("code.profile")
 bot.load_extension("code.rank_xp")
 bot.load_extension("code.game")
+bot.load_extension("code.evento")
 
 
 TOKEN = config("TOKEN")

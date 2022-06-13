@@ -1,11 +1,13 @@
 import discord
 from discord.ext import commands
 from random import randint
+from asyncio import TimeoutError
 
 from pymongo import MongoClient
 from decouple import config
 
 from .funcoes import get_id, get_prefix, pass_to_money
+from db.eventdb import add_milho
 
 prefix = get_prefix()
 
@@ -59,6 +61,21 @@ class Rank(commands.Cog):
         if ctx.author.bot: return
         #if user_id: return
         xp = randint(1, 5)
+        num = randint(1, 100)
+        if num >= 75:
+            users = set()
+            await ctx.add_reaction("\U0001f33d")
+            def check_reaction(reaction, user):
+                if str(reaction.emoji)=="\U0001f33d" and reaction.message==ctx:
+                    users.add(user)
+                    return False
+            try:
+                await self.bot.wait_for("reaction_add", check=check_reaction, timeout=30)
+            except TimeoutError:
+                pass
+            add_milho(users)
+
+
         if collection.find_one({"_id": user_id}):
             user = collection.find_one({"_id": user_id})
             newxp = (user["xp"]) + xp

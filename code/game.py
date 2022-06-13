@@ -94,7 +94,7 @@ class Game(commands.Cog):
             else:
                 await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
         except asyncio.TimeoutError:
-            await ctx.send(f"{ctx.author} Demorou demais. Game over") 
+            await ctx.send(f"<@{ctx.author.id}> Demorou demais. Game over") 
             return 
 
 
