@@ -12,7 +12,7 @@ prefix = get_prefix()
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Kivida"]
+db = cluster["Discord"]
 collection = db["msg"]
 
 levels = [
