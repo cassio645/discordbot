@@ -7,7 +7,7 @@ from pymongo import MongoClient
 from decouple import config
 
 from .funcoes import get_id, get_prefix, pass_to_money
-from db.eventdb import add_milho
+from db.eventdb import add_milho_users
 
 prefix = get_prefix()
 
@@ -18,7 +18,7 @@ db = cluster["Discord"]
 collection = db["msg"]
 
 levels = [
-    10, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000, 95000, 100000, 105000, 110000, 115000, 120000, 125000, 130000, 135000, 140000, 145000, 150000, 155000, 160000, 165000, 170000, 175000, 180000, 185000, 190000, 195000, 200000, 205000, 210000, 215000, 220000, 225000, 230000, 235000, 240000, 245000, 250000, 255000, 260000, 265000, 270000, 275000, 280000, 285000, 290000, 295000, 300000, 305000, 310000, 315000, 320000, 325000, 330000, 335000, 340000, 345000, 350000, 400000, 410000, 420000, 430000, 440000, 450000, 460000, 470000, 480000, 490000, 500000, 510000, 520000, 530000, 540000, 550000, 560000, 570000, 580000, 590000, 600000, 700000, 800000, 900000, 1000000
+    10, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 7700, 10000, 12400, 14900, 17500, 20200, 23000, 25900, 28900, 32000, 35200, 38500, 41900, 45400, 49000, 52700, 56500, 60400, 64400, 68500, 72700, 77000, 81400, 85900, 90500, 95200, 100000, 104900, 109900, 115000, 120200, 125500, 130900, 136400, 142000, 147700, 153500, 159400, 165400, 171500, 177700, 184000, 190400, 196900, 203500, 210200, 217000, 223900, 230900, 238000, 245200, 252500, 259900, 267400, 275000, 282700, 290500, 298400, 306400, 314500, 322700, 331000, 339400, 347900, 356500, 365200, 374000, 382900, 391900, 401000, 410200, 419500, 428900, 438400, 448000, 457700, 467500, 477400, 487400, 497500, 507700, 518000, 528400, 538900, 549500, 560200, 571000, 581900, 592900, 604000 
 ]
 
 def level_up(user_id, level):
@@ -60,9 +60,12 @@ class Rank(commands.Cog):
         user_id = ctx.author.id
         if ctx.author.bot: return
         #if user_id: return
-        xp = randint(1, 5)
+        xp = [0, 0, 1, 2, 5, 10]
+        xp = choice(xp)
+
+        # evento
         num = randint(1, 100)
-        if num >= 75:
+        if num >= 90:
             users = set()
             await ctx.add_reaction("\U0001f33d")
             def check_reaction(reaction, user):
@@ -73,21 +76,21 @@ class Rank(commands.Cog):
                 await self.bot.wait_for("reaction_add", check=check_reaction, timeout=30)
             except TimeoutError:
                 pass
-            add_milho(users)
+            add_milho_users(users) # end evento
 
-
-        if collection.find_one({"_id": user_id}):
-            user = collection.find_one({"_id": user_id})
-            newxp = (user["xp"]) + xp
-            newvalues = { "$set": {"xp": newxp}}
-            collection.update_one(user, newvalues)
-            if newxp >= levels[user['level']]:
-                level_up(user_id, user['level'])
-                #channel = self.bot.get_channel(972213997833187408)
-                #await channel.send(f"<@{user_id}> subiu para o level {user['level'] + 1}")
-        else:
-            dados = {"_id": user_id, "level": 0, "xp": xp}
-            collection.insert_one(dados)
+        if xp > 0:
+            if collection.find_one({"_id": user_id}):
+                user = collection.find_one({"_id": user_id})
+                newxp = (user["xp"]) + xp
+                newvalues = { "$set": {"xp": newxp}}
+                collection.update_one(user, newvalues)
+                if newxp >= levels[user['level']]:
+                    level_up(user_id, user['level'])
+                    #channel = self.bot.get_channel(972213997833187408)
+                    #await channel.send(f"<@{user_id}> subiu para o level {user['level'] + 1}")
+            else:
+                dados = {"_id": user_id, "level": 0, "xp": xp}
+                collection.insert_one(dados)
 
     @commands.command(name="reset_xp", aliases=["reset-xp", "resete-xp", "resete_xp"])
     @commands.has_permissions(administrator=True)

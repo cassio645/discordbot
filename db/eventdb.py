@@ -18,20 +18,31 @@ def add_new_user_event(user_id, milho=1):
         return
 
 
-def add_milho(users, milho=1):
-    lista_u = []
+def add_milho_users(users, milho=1):
+    lista_users = []
     for user in users:
-        lista_u.append(user.id)
+        lista_users.append(user.id)
     for x in collection.find({"_id": {"$gt": 0}}):
-        if x["_id"] in lista_u:
+        if x["_id"] in lista_users:
             total = milho + x["milho"]
             new_values = { "$set": { "milho":  total} }
             collection.update_one(x, new_values)
-            lista_u.remove(x["_id"])
-    if lista_u:
-        for user in lista_u:
-            add_new_user_event(user)
-
+            lista_users.remove(x["_id"])
+    if lista_users:
+        lista_de_novos_users = []
+        for user in lista_users:
+            lista_de_novos_users.append({"_id": user, "milho": 1, "premios": []})
+        collection.insert_many(lista_de_novos_users)
+        
+            
+def add_milho(user_id, milho=1):
+    if collection.find_one({"_id": user_id}):
+        user = collection.find_one({"_id": user_id})
+        total = user["milho"] + milho
+        new_values = { "$set": { "milho":  total} }
+        collection.update_one(user, new_values)
+    else:
+        add_new_user_event(user_id, milho=milho)
         
 
 

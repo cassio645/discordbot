@@ -8,6 +8,7 @@ from db.mydb import add_money, remove_money
 from db.cooldown import add_aposta
 from .asserts import dicionario, lista_raspadinha
 from .funcoes import get_prefix, pass_to_num
+from db.eventdb import add_milho
 
 prefix = get_prefix()
 
@@ -105,7 +106,140 @@ class Casino(commands.Cog):
 			# convertendo o tempo que falta para dar 1hr
             await ctx.send(f'Você deve esperar **{convert[-2:]}s** para jogar novamemte.')
    
+    # slot-machine evento
+    @commands.command(name="apostar", aliases=["aposta", "cassino"])
+    async def apostar(self, ctx, *, arg=0):
+        if((ctx.channel.id) in self.channels):
+            arg = pass_to_num(arg)
+            if (arg is False) or arg <= 0:
+                kivs_embed = discord.Embed(title="Apostar", description=f"Aposte para tentar aumentar seus kivs. Você pode apostar qualquer valor, até 5x por hora. Os prêmios serão multiplicações do valor que você apostar. Confira abaixo.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n", colour=0xFFD301)
+                kivs_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973589210097385512/banner.png")
+                kivs_embed.set_footer(text='Kivida Bot')
+                await ctx.send(embed=kivs_embed)
+                return
+            #cd = add_aposta(ctx.author.id)
+            cd = True # removi cooldown
+            if cd == True:
+                resposta = remove_money(ctx.author.id, arg)
+                if resposta:
+                    lista_degif = list(dicionario.keys())
+                    numero = randint(1, 1000) # chance de vencer 19%
 
+                    if numero < 4:
+                        premio = arg * 60
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973322978915917884/bcd07605-7925-4860-8c0e-986af52930b1.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        
+                        sleep(5)
+                        add_money(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou 60x", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio} :drop_of_blood: ", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973323007881789470/bcd07605.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    elif numero < 15:
+                        premio = arg * 25
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986284971234820126/ffcebd48-291c-4359-.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        
+                        sleep(5)
+                        add_money(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou 25x", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio} :drop_of_blood: ", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986285026465435749/c86efbd4e38.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    elif numero < 35:
+                        premio = arg * 10
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973323900811366480/b8b2cf18-e6da-4304-b6b2-c913450218aa.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        
+                        sleep(5)
+                        add_money(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou 10x", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio} :drop_of_blood: ", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973323934386761858/b8b2cf1.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    elif numero < 65:
+                        premio = arg * 5
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986286314200649788/44a47787-bad9.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        
+                        sleep(5)
+                        add_money(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou 5x", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio} :drop_of_blood: ", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986286352876310539/d9f8c8ad7eea.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    elif numero < 120:
+                        premio = arg * 2
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986285571053858826/6e4fbe61.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        
+                        sleep(5)
+                        add_money(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou 2x", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio} :drop_of_blood: ", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986285616213934140/b0a515110c6.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    elif numero < 145: # milho
+                        premio = 1
+                        if int(arg) >= 10000:
+                            premio = 2
+                        elif int(arg) >= 50000:
+                            premio = 3
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986292278731612190/ee45066982.gif")
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+
+                        sleep(5)
+                        add_milho(ctx.author.id, premio)
+                        novo_embed = discord.Embed(title="Parabéns você ganhou um :corn:", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio}:corn:", colour=0x10c727)
+                        novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986292304493019236/ree45066982.png")
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+
+                    else:
+                        # vai pegar um dos gifs que não ganha
+                        escolha = choice(lista_degif)
+                        embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
+                        embed_jogo.set_image(url=escolha)
+                        embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        msg = await ctx.send(embed=embed_jogo)
+                        img = dicionario[escolha]
+                        sleep(5)
+                        novo_embed = discord.Embed(title="Que pena...", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** 0", colour=0xc71010)
+                        novo_embed.set_image(url=img)
+                        novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
+                        await msg.edit(embed=novo_embed)
+                else:
+                    await ctx.send("Você não tem kivs suficiente.")
+            else:
+                await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")
+        else:
+            await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
+
+	
+def setup(bot):
+    """Load Casino Cog."""
+    bot.add_cog(Casino(bot))
+
+
+'''
     # slot-machine
     @commands.command(name="apostar", aliases=["aposta", "cassino"])
     async def apostar(self, ctx, *, arg=0):
@@ -213,9 +347,4 @@ class Casino(commands.Cog):
                 await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")
         else:
             await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
-
-
-	
-def setup(bot):
-    """Load Casino Cog."""
-    bot.add_cog(Casino(bot))
+'''
