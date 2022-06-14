@@ -216,6 +216,7 @@ class Casino(commands.Cog):
                     else:
                         # vai pegar um dos gifs que não ganha
                         escolha = choice(lista_degif)
+                        print(lista_degif)
                         embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
                         embed_jogo.set_image(url=escolha)
                         embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")

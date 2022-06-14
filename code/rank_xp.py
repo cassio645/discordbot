@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from random import randint
+from random import randint, choice
 from asyncio import TimeoutError
 
 from pymongo import MongoClient

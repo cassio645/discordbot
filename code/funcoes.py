@@ -8,7 +8,7 @@ from capas.all_capas import lista_de_capas
 locale.setlocale(locale.LC_ALL, '')
 
 def get_prefix():
-    return "!"
+    return "k!"
 
 def all_channels():
     # cassino, c4, games é diferente

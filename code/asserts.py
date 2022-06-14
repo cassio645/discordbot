@@ -1,6 +1,6 @@
 # evento
 dicionario = {
-        "https://cdn.discordapp.com/attachments/883810728140734506/973308709361025154/f57df52a-3da6-4401-a2a1-12dfce3b48e9.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973309072470327347/dfce3b48e9.gif.png",
+    "https://cdn.discordapp.com/attachments/883810728140734506/973308709361025154/f57df52a-3da6-4401-a2a1-12dfce3b48e9.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973309072470327347/dfce3b48e9.gif.png",
     "https://cdn.discordapp.com/attachments/883810728140734506/973309990955782224/bb0e6ce2-d619-4705-a9de-af177cb7eb33.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973310252650999838/bb0e6ce2-d.png",
     "https://cdn.discordapp.com/attachments/883810728140734506/973311758800408586/5ac44473-afd6-486d-ad20-9bc0d9f654a5.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973311906070794250/5ac44473-af.png",
     "https://cdn.discordapp.com/attachments/883810728140734506/973312920610013284/f204808d-1c58-4316-8af2-5e48f178b841.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973313038629347428/f204808d.png",
@@ -9,8 +9,7 @@ dicionario = {
     "https://cdn.discordapp.com/attachments/883810728140734506/973316656413687818/54761399-d5b2-4042-986d-142e3404193d.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973316683232055306/d54761399.png"
 
 }
-dicionario_normal = {
-    "https://cdn.discordapp.com/attachments/883810728140734506/973308709361025154/f57df52a-3da6-4401-a2a1-12dfce3b48e9.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973309072470327347/dfce3b48e9.gif.png",
+normal = {
     "https://cdn.discordapp.com/attachments/883810728140734506/973309990955782224/bb0e6ce2-d619-4705-a9de-af177cb7eb33.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973310252650999838/bb0e6ce2-d.png",
     "https://cdn.discordapp.com/attachments/883810728140734506/973311758800408586/5ac44473-afd6-486d-ad20-9bc0d9f654a5.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973311906070794250/5ac44473-af.png",
     "https://cdn.discordapp.com/attachments/883810728140734506/973312920610013284/f204808d-1c58-4316-8af2-5e48f178b841.gif": "https://cdn.discordapp.com/attachments/883810728140734506/973313038629347428/f204808d.png",
