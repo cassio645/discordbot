@@ -50,8 +50,24 @@ def get_milho(user_id):
     # pega o valor de milho da pessoa
     try:
         user = collection.find_one({"_id": user_id})
-        milho = user["milho"]
-        return milho
+        return user
     except TypeError:
         return 0
 
+
+def add_categoria(user_id, num):
+    user = collection.find_one({"_id": user_id})
+    collection.update_one(user,{"$push": {"premios": num}})
+
+
+def remove_milho(user_id, values):
+    if collection.find_one({"_id": user_id}):
+        user = collection.find_one({"_id": user_id})
+        if values > user["milho"]:
+            return False
+        else:
+            total = user["milho"] - values
+            new_values = { "$set": { "milho":  total} }
+            collection.update_one(user, new_values)
+            return True
+    else: return False

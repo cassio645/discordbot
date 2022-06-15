@@ -25,6 +25,8 @@ def verifica_valor(valor):
         return 30000
     elif valor == "<:rubyheart:973214888539340810>":
         return 1000000
+    elif valor == ":corn:":
+        return 1
     else:
         return 0
 
@@ -34,10 +36,10 @@ class Casino(commands.Cog):
         self.bot = bot
         self.channels = [985991485876998207, 985989056502562886, 985962497364328499]
         #self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
-    
-    # raspadinha
+        
+   # raspadinha
     @commands.command()
-    @cooldown(1, 15, BucketType.user)
+    @cooldown(1, 1, BucketType.user)
     async def raspadinha(self, ctx, *, args='.'):
         if((ctx.channel.id) in self.channels):
             if args.lower() == "comprar" or args.lower() == "compra":
@@ -68,20 +70,57 @@ class Casino(commands.Cog):
                         valor += verifica_valor(l1[2])
 
                     # Exibir para o user
+                    valor = 2
                     if valor > 9999:
-                        add_money(ctx.author.id, valor)
-                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}||\n"
-                        await ctx.send(msg)
+                        teste = str(valor)
+                        if teste[-1] != "0":
+                            milho = int(teste[-1])
+                            valor -= milho
+                            add_milho(ctx.author.id, milho)
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor} e {milho}:corn:||\n"
+                            await ctx.send(msg)
+                        else:
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}             ||\n"
+                            await ctx.send(msg)
                     elif valor > 999:
-                        add_money(ctx.author.id, valor)
-                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}   ||\n"
-                        await ctx.send(msg)
+                        teste = str(valor)
+                        if teste[-1] != "0":
+                            milho = int(teste[-1])
+                            valor -= milho
+                            add_milho(ctx.author.id, milho)
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor} e {milho}:corn:   ||\n"
+                            await ctx.send(msg)
+                        else:
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}                ||\n"
+                            await ctx.send(msg)
                     elif valor > 499:
-                        add_money(ctx.author.id, valor)
-                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}     ||\n"
-                        await ctx.send(msg)
+                        teste = str(valor)
+                        if teste[-1] != "0":
+                            milho = int(teste[-1])
+                            valor -= milho
+                            add_milho(ctx.author.id, milho)
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor} e {milho}:corn:      ||\n"
+                            await ctx.send(msg)
+                        else:
+                            add_money(ctx.author.id, valor)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}                      ||\n"
+                            await ctx.send(msg)
+                    elif valor > 0:
+                        teste = str(valor)
+                        if teste[-1] != "0":
+                            valor = 0
+                            milho = int(teste[-1])
+                            add_milho(ctx.author.id, milho)
+                            msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor} e {milho}:corn:           ||\n"
+                            await ctx.send(msg)
                     else:
-                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** 0          ||\n"
+                        valor = 0
+                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:**   {valor}                      ||\n"
                         await ctx.send(msg)
                 else:
                     await ctx.send("Você não tem kivs suficiente.")
@@ -96,7 +135,8 @@ class Casino(commands.Cog):
                 await ctx.send(embed=embed_raspadinha)
         else:
             await ctx.send("Esse comando não é permitido aqui nesse canal. <#983462889086124072>")
-
+ 
+ 
     @raspadinha.error
     async def raspadinha_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -199,8 +239,10 @@ class Casino(commands.Cog):
                         premio = 1
                         if int(arg) >= 10000:
                             premio = 2
-                        elif int(arg) >= 50000:
+                        if int(arg) >= 50000:
                             premio = 3
+                        if int(arg) >= 100000:
+                            premio = 4
                         embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
                         embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986292278731612190/ee45066982.gif")
                         embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
@@ -216,7 +258,6 @@ class Casino(commands.Cog):
                     else:
                         # vai pegar um dos gifs que não ganha
                         escolha = choice(lista_degif)
-                        print(lista_degif)
                         embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
                         embed_jogo.set_image(url=escolha)
                         embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")
@@ -241,6 +282,69 @@ def setup(bot):
 
 
 '''
+   # raspadinha
+    @commands.command()
+    @cooldown(1, 15, BucketType.user)
+    async def raspadinha(self, ctx, *, args='.'):
+        if((ctx.channel.id) in self.channels):
+            if args.lower() == "comprar" or args.lower() == "compra":
+                resposta = remove_money(ctx.author.id, 500)
+                if resposta:
+                    x = randint(0, 2)
+                    valor = 0
+                    l1 = choices(lista_raspadinha[x], k=3) # linha 1 (k=3 quer dizer que ele vai pegar 3 valores da lista)
+                    l2 = sample(lista_raspadinha[x-1], k=3) # linha 2
+                    l3 = sample(lista_raspadinha[x-2], k=3) # linha 3 
+
+                    ex_l1 = f"||{l1[0]} {l1[1]} {l1[2]}||"
+                    ex_l2 = f"||{l2[0]} {l2[1]} {l2[2]}||"
+                    ex_l3 = f"||{l3[0]} {l3[1]} {l3[2]}||"
+                    
+                    for l in [l1, l2, l3]:          # verificando se ele ganhou em uma linha
+                        if l[0] == l[1] == l[2]:
+                            valor += verifica_valor(l[0])
+                                            
+                    for x in range(3):              # verificando se ele ganhou em uma coluna
+                        if l1[x] == l2[x] == l3[x]:
+                            valor += verifica_valor(l1[x])        
+                    
+                    if l1[0] == l2[1] == l3[2]:     # verificando se ele ganhou na diagonal
+                        valor += verifica_valor(l1[0])
+                        
+                    if l1[2] == l2[1] == l3[0]:
+                        valor += verifica_valor(l1[2])
+
+                    # Exibir para o user
+                    if valor > 9999:
+                        add_money(ctx.author.id, valor)
+                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}||\n"
+                        await ctx.send(msg)
+                    elif valor > 999:
+                        add_money(ctx.author.id, valor)
+                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}   ||\n"
+                        await ctx.send(msg)
+                    elif valor > 499:
+                        add_money(ctx.author.id, valor)
+                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** {valor}     ||\n"
+                        await ctx.send(msg)
+                    else:
+                        msg = f"{ctx.author}\n{ex_l1}\n{ex_l2}\n{ex_l3}\n\n||**Prêmio:** 0          ||\n"
+                        await ctx.send(msg)
+                else:
+                    await ctx.send("Você não tem kivs suficiente.")
+            else:
+                embed_raspadinha = discord.Embed(
+                    title = 'Como comprar uma raspadinha.',
+                    description=f'É muito simples você deve usar o comando `{prefix}raspadinha comprar` para obter uma raspadinha. Lembrando que você pode ganhar nas linhas, colunas e diagonais.\n\n**Comando:** `{prefix}raspadinha comprar`ㅤㅤㅤㅤ**Preço:** 500 :drop_of_blood: ',
+                    colour=0xFFD301
+                )
+                embed_raspadinha.add_field(name="Prêmios", value=f"<:OWLgg:973214922655821864> 500:drop_of_blood: \n<:dogecoin:973687932542148608> 1.000:drop_of_blood:  \n<:alienkiss:973238737867792435> 10.000:drop_of_blood: \n<:bitcoin:973214832499236885> 30.000:drop_of_blood: \n<:rubyheart:973214888539340810> 1.000.000:drop_of_blood: ")
+                embed_raspadinha.set_footer(text='Kivida Bot')
+                await ctx.send(embed=embed_raspadinha)
+        else:
+            await ctx.send("Esse comando não é permitido aqui nesse canal. <#983462889086124072>")
+
+
     # slot-machine
     @commands.command(name="apostar", aliases=["aposta", "cassino"])
     async def apostar(self, ctx, *, arg=0):

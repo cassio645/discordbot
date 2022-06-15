@@ -61,6 +61,47 @@ def remove_png(name):
         name = name.replace(".png", "")
     return name
 
+def find_cor(name): # teste
+    if "@" in name:
+        name = str(name.replace("@", ""))
+        if "<&" in name:
+            n = name.replace("<&", "")
+            name = n.replace(">", "")
+    if name.lower() in ["cor lizard", "lizard", "986627950738804826"]:
+        return 986627950738804826
+    elif name.lower() in ["cor ciano", "ciano", "977930708188286986"]:
+        return 977930708188286986
+    elif name.lower() in ["cor amethyst", "amethyst", "ametyst", "cor ametyst", "cor amethist", "amethist", "986627950130626680"]:
+        return 986627950130626680
+    elif name.lower() in ["cor blue", "blue", "986627949291786280"]:
+        return 986627949291786280
+    elif name.lower() in ["cor pink", "cor pinky", "pink", "pinky", "986627944489316392"]:
+        return 986627944489316392
+    elif name.lower() in ["cor amber", "amber", "977932632065208370"]:
+        return 977932632065208370
+    elif name.lower() in ["cor pantone", "cor panetone", "pantone", "panetone", "977932639912742922"]:
+        return 977932639912742922
+    elif name.lower() in ["cor barbie", "barbie", "cor barbe", "barbe", "971846285520953355"]:
+        return 971846285520953355
+    elif name.lower() in ["cor red", "red", "977930579494469732"]:
+        return 977930579494469732
+    elif name.lower() in ["cor crayola", "crayola", "986627951648989244"]:
+        return 986627951648989244
+    elif name.lower() in ["cor rosy", "rosy", "986627952248770560"]:
+        return 986627952248770560
+    elif name.lower() in ["cor powder", "powder", "cor power", "power", "986627953121193984"]:
+        return 986627953121193984
+    elif name.lower() in ["cor cream", "cream", "986627953880338432"]:
+        return 986627953880338432
+    elif name.lower() in ["cor celadon", "celadon", "cor celadom", "celadom", "986627954572419082"]:
+        return 986627954572419082
+    elif name.lower() in ["cor black", "black", "preto", "cor preto", "preta", "cor preta", "940762975055249458"]:
+        return 940762975055249458
+    else:
+        return False
+
+    
+'''
 #criar novo
 def find_cor(name):
     if "@" in name:
@@ -100,6 +141,7 @@ def find_cor(name):
         return 985256011243868190
     else:
         return False
+'''
 
 def find_capa(name):
     # recebe uma string e procura na lista de capas se ela existe

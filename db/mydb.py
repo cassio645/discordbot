@@ -122,7 +122,6 @@ def add_capa(user_id, capa):
     # adiciona uma nova capa na lista de capas do usuário
     user = collection.find_one({"_id": user_id})
     capa = find_capa(capa)
-    print(f"no db: {capa}")
     if capa:
         collection.update_one(user,{"$push": {"user_capas": capa}})
         return True

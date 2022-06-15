@@ -227,18 +227,25 @@ class Store(commands.Cog):
                         return
 
                 elif item["role"] and item["cmd"] not in ["vip"]:
-                        if remove_money(ctx.author.id, item["price"]):
-                            role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
-                            member = ctx.guild.get_member(ctx.author.id)
-                            response = add_cor(ctx.author.id, item["cmd"])
-                            if response == True:
-                                    await ctx.send(f"{item['msg']}")
-                                    return
+                        cores = get_user_cores(ctx.author.id)
+                        possui = item["role"] in cores
+                        if not possui:
+
+                            if remove_money(ctx.author.id, item["price"]):
+                                role = discord.utils.get(ctx.guild.roles, id=int(item["role"]))
+                                member = ctx.guild.get_member(ctx.author.id)
+                                response = add_cor(ctx.author.id, item["cmd"])
+                                if response == True:
+                                        await ctx.send(f"{item['msg']}")
+                                        return
+                                else:
+                                        await ctx.send(response)
+                                        return
                             else:
-                                    await ctx.send(response)
-                                    return
+                                await ctx.send("Você não tem kivs suficiente.")
+                                return
                         else:
-                            await ctx.send("Você não tem kivs suficiente.")
+                            await ctx.send(f"Você já tem essa cor. Veja em {prefix}cores")
                             return
                 elif item["role"] and item["cmd"] in ["vip", "cargo vip"]:
                         if remove_money(ctx.author.id, item["price"]):
