@@ -26,7 +26,7 @@ def verifica_valor(valor):
     elif valor == "<:rubyheart:973214888539340810>":
         return 1000000
     elif valor == ":corn:":
-        return 1
+        return 2
     else:
         return 0
 
@@ -237,12 +237,18 @@ class Casino(commands.Cog):
 
                     elif numero < 145: # milho
                         premio = 1
-                        if int(arg) >= 10000:
+                        if int(arg) >= 100:
                             premio = 2
-                        if int(arg) >= 50000:
+                        if int(arg) >= 1000:
                             premio = 3
+                        if int(arg) >= 5000:
+                            premio = 5
+                        if int(arg) >= 10000:
+                            premio = 10
+                        if int(arg) >= 50000:
+                            premio = 15
                         if int(arg) >= 100000:
-                            premio = 4
+                            premio = 20
                         embed_jogo = discord.Embed(title="Jogando caça-niquel", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** -", colour=0xFFD301)
                         embed_jogo.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986292278731612190/ee45066982.gif")
                         embed_jogo.set_footer(text=f"Aposta realizada por {ctx.author}")

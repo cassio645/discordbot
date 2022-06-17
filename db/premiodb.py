@@ -22,6 +22,7 @@ def get_premio(product_name):
     else:
         return False
 
+
 def edit_premio(product_name, chave, valor):
     # recebe o Id, uma chave e valor para criar um dicionário com os novos valores
     if collection.find_one({"name": product_name}):
@@ -34,3 +35,31 @@ def edit_premio(product_name, chave, valor):
             return False
     else:
         return False
+
+
+def get_embed_premios(arg):
+    registers = []
+    if arg == 1:
+        for x in collection.find({"categoria": {"$gt": 0}}):
+            if x["categoria"] in [1, 2, 3, 4]:
+                registers.append(x)
+    elif arg == 2:
+        for x in collection.find({"categoria": 5}):
+            registers.append(x)
+    elif arg == 3:
+        for x in collection.find({"categoria": 6}):
+            registers.append(x)
+    elif arg == 4:
+        for x in collection.find({"categoria": 7}):
+            registers.append(x)
+    elif arg == 5:
+        for x in collection.find({"categoria": 8}):
+            registers.append(x)
+    elif arg == 6:
+        for x in collection.find({"categoria": 9}):
+            registers.append(x)
+    elif arg == 7:
+        for x in collection.find({"categoria": 10}):
+            registers.append(x)
+    
+    return registers

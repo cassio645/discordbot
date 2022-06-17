@@ -9,6 +9,7 @@ from db.mydb import get_user, get_time_rep_and_add, add_rep, get_user_capas, set
 from code.funcoes import get_prefix, pass_to_date, pass_to_money, find_capa, get_id, all_channels, find_cor
 from .rank_xp import get_xp_user
 from .asserts import lista_de_cores
+from db.eventdb import get_milho
 
 prefix = get_prefix()
 
@@ -47,12 +48,14 @@ class Information(commands.Cog):
             info = get_user(member.id)
             level, xp = get_xp_user(member.id)
             name = str(member.display_name)
+            milho = (get_milho(member.id))
+            milho = str(milho["milho"]) + " Milhos"
             if info:
                 money = pass_to_money(info["money"]) 
                 rep = str(info["rep"]) + " reps"
                 frase = tr.wrap(str(info["status"]), width=60)
                 sobremim = "\n".join(frase)
-                vip = pass_to_date(info["vip"])
+                #vip = pass_to_date(info["vip"])
                 vits = str(info["c4"]) + " Vitórias"
                 user_bg = str(info["capa"].replace("capa", ""))  
             else:
@@ -61,7 +64,7 @@ class Information(commands.Cog):
                 sobremim = "\n".join(frase)
                 user_bg = "default.png"
 
-            base = Image.open("capas/base.png").convert("RGBA")
+            base = Image.open("capas/base1.png").convert("RGBA")
             background = Image.open("capas/" + user_bg).convert("RGBA")
 
             pfp = member.avatar_url_as(size=256)
@@ -79,9 +82,9 @@ class Information(commands.Cog):
             draw.text((280, 240), name, font=font)
             draw.text((25, 380), sobremim, font=subfont)
             draw.text((60, 530), money, font=subfont)
-            draw.text((410, 530), vits, font=subfont)
-            draw.text((60, 655), rep, font=subfont)
-            draw.text((410, 655), vip, font=subfont)
+            draw.text((410, 532), vits, font=subfont)
+            draw.text((60, 650), rep, font=subfont)
+            draw.text((410, 650), milho, font=subfont)
             draw.text((60, 780), level, font=subfont)
             draw.text((410, 780), xp, font=subfont)
             base.paste(pfp, (56, 158), pfp)

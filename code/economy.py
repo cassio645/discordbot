@@ -41,7 +41,7 @@ class Economy(commands.Cog):
 			else:
 				await ctx.send(f"Você já pegou seu daily hoje.")
 
-
+'''
 
 	@commands.command(name="pay", aliases=["pagar", "send", "pagamento", "enviar"])
 	@commands.has_permissions(administrator=True)
@@ -72,7 +72,7 @@ class Economy(commands.Cog):
 			except:
 				await ctx.send("Algo deu errado.")
 
-
+'''
 
 	
 	
