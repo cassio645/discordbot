@@ -40,7 +40,7 @@ class Casino(commands.Cog):
         
    # raspadinha
     @commands.command()
-    @cooldown(1, 1, BucketType.user)
+    @cooldown(1, 10, BucketType.user)
     async def raspadinha(self, ctx, *, args='.'):
         if((ctx.channel.id) in self.channels_raspadinha):
             if args.lower() == "comprar" or args.lower() == "compra":
@@ -158,8 +158,7 @@ class Casino(commands.Cog):
                 kivs_embed.set_footer(text='Kivida Bot')
                 await ctx.send(embed=kivs_embed)
                 return
-            #cd = add_aposta(ctx.author.id)
-            cd = True # removi cooldown
+            cd = add_aposta(ctx.author.id)
             if cd == True:
                 resposta = remove_money(ctx.author.id, arg)
                 if resposta:
@@ -257,7 +256,7 @@ class Casino(commands.Cog):
 
                         sleep(5)
                         add_milho(ctx.author.id, premio)
-                        novo_embed = discord.Embed(title="Parabéns você ganhou um :corn:", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio}:corn:", colour=0x10c727)
+                        novo_embed = discord.Embed(title=f"Parabéns você ganhou {premio}:corn:", description=f"**Valor apostado:** {arg} :drop_of_blood: \n**Prêmio:** {premio}:corn:", colour=0x10c727)
                         novo_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/986292304493019236/ree45066982.png")
                         novo_embed.set_footer(text=f"Aposta realizada por {ctx.author}")
                         await msg.edit(embed=novo_embed)
