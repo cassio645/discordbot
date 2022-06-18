@@ -14,8 +14,8 @@ class Game(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.channels = [985991485876998207, 985989056502562886, 985962497364328499]
-        #self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
+        #self.channels = [985991485876998207, 985989056502562886, 985962497364328499]
+        self.channels = [968045281843220520, 968048613806723082, 982711181259210833, 986033120568565760, 981554796358152202]
 
 
     @commands.command(name="guess", aliases=["adv", "adivinhar", "adivinha", "chuta", "chutar"], )
@@ -92,7 +92,7 @@ class Game(commands.Cog):
                 else:
                     await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")
             else:
-                await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
+                await ctx.send("Esse comando não é permitido aqui. Use em <#986033120568565760>")
         except asyncio.TimeoutError:
             await ctx.send(f"<@{ctx.author.id}> Demorou demais. Game over") 
             return 

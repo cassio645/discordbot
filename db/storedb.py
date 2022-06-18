@@ -5,7 +5,7 @@ from pymongo.errors import DuplicateKeyError
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Discord"]
+db = cluster["Kivida"]
 collection = db["store"]
 
 

@@ -34,14 +34,15 @@ class Casino(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.channels = [985991485876998207, 985989056502562886, 985962497364328499]
-        #self.channels = [944649962686386256, 983462889086124072, 982711181259210833, 968048613806723082, 968045281843220520, 975176426741440542]
+        #self.channels = [985991485876998207, 985989056502562886, 985962497364328499]
+        self.channels_raspadinha = [968045281843220520, 968048613806723082, 982711181259210833, 986032461660172318, 981554796358152202]
+        self.channels_apostar = [968045281843220520, 968048613806723082, 982711181259210833, 986033426689818675, 981554796358152202]
         
    # raspadinha
     @commands.command()
     @cooldown(1, 1, BucketType.user)
     async def raspadinha(self, ctx, *, args='.'):
-        if((ctx.channel.id) in self.channels):
+        if((ctx.channel.id) in self.channels_raspadinha):
             if args.lower() == "comprar" or args.lower() == "compra":
                 resposta = remove_money(ctx.author.id, 500)
                 if resposta:
@@ -134,7 +135,7 @@ class Casino(commands.Cog):
                 embed_raspadinha.set_footer(text='Kivida Bot')
                 await ctx.send(embed=embed_raspadinha)
         else:
-            await ctx.send("Esse comando não é permitido aqui nesse canal. <#983462889086124072>")
+            await ctx.send("Esse comando não é permitido aqui nesse canal. Use em <#986032461660172318>")
  
  
     @raspadinha.error
@@ -149,7 +150,7 @@ class Casino(commands.Cog):
     # slot-machine evento
     @commands.command(name="apostar", aliases=["aposta", "cassino"])
     async def apostar(self, ctx, *, arg=0):
-        if((ctx.channel.id) in self.channels):
+        if((ctx.channel.id) in self.channels_apostar):
             arg = pass_to_num(arg)
             if (arg is False) or arg <= 0:
                 kivs_embed = discord.Embed(title="Apostar", description=f"Aposte para tentar aumentar seus kivs. Você pode apostar qualquer valor, até 5x por hora. Os prêmios serão multiplicações do valor que você apostar. Confira abaixo.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n", colour=0xFFD301)
@@ -279,7 +280,7 @@ class Casino(commands.Cog):
             else:
                 await ctx.send(f"Você precisa esperar mais {cd[:2]}m {cd[3:]}s")
         else:
-            await ctx.send("Esse comando não é permitido aqui. <#983462889086124072>")
+            await ctx.send("Esse comando não é permitido aqui. Use em <#986033426689818675>")
 
 	
 def setup(bot):

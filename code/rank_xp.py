@@ -14,7 +14,7 @@ prefix = get_prefix()
 MONGO_TOKEN = config('MONGO_TOKEN')
 
 cluster = MongoClient(MONGO_TOKEN)
-db = cluster["Discord"]
+db = cluster["Kivida"]
 collection = db["msg"]
 
 levels = [
@@ -92,6 +92,8 @@ class Rank(commands.Cog):
                 dados = {"_id": user_id, "level": 0, "xp": xp}
                 collection.insert_one(dados)
 
+
+'''
     @commands.command(name="reset_xp", aliases=["reset-xp", "resete-xp", "resete_xp"])
     @commands.has_permissions(administrator=True)
     async def reset_xp(self, ctx):
@@ -99,7 +101,7 @@ class Rank(commands.Cog):
             await ctx.send("O xp do servidor foi resetado.")
         else:
             await ctx.send("Não foi.")
-
+'''
 
 
 

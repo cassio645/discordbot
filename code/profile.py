@@ -147,9 +147,9 @@ class Information(commands.Cog):
                 
                        
     @commands.command(name="usar_capa", aliases=["usar-capa", "usa-capa"])
-    async def usar_capa(self, ctx, *, arg):
+    async def usar_capa(self, ctx, *, arg:str):
         if ctx.channel.id in self.channels:
-            capa = find_capa(str(arg))
+            capa = find_capa(arg.lower())
             user_capas = get_user_capas(ctx.author.id)
             if user_capas and capa:
                 for i in user_capas:

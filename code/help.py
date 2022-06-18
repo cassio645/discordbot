@@ -61,8 +61,7 @@ class HelpCog(commands.Cog):
 		# Embed Games
 		games_embed = discord.Embed(
 				title = 'Games do Kivida Bot',
-				description=f'**adivinhar | adv**\nAdivinhe o númeroe ganhe kivs.\n**Cooldown: 5 partidas por hora**ㅤㅤㅤ**Chances de adivinhar:** 4\n**Modo de usar:** `{prefix}adivinhar`\n\n'
-				f'**rank c4**\n Veja o rank de vitórias do jogo Connect4\n(Jogos contra o bot não contam vitória.)\n**Modo de usar:** `{prefix}rank c4`',
+				description=f'**rank c4**\n Veja o rank de vitórias do jogo Connect4\n(Jogos contra o bot não contam vitória.)\n**Modo de usar:** `{prefix}rank c4`',
 				colour=0xFFD301
 			)
 		games_embed.add_field(name="CONNECT 4", value=f'**connect4** | **c4**\nJogue connect4 contra outro usuário ou contra o bot\n**Modo de usar:** `{prefix}c4 | {prefix}c4 bot`\n\n', inline=False)
@@ -76,12 +75,16 @@ class HelpCog(commands.Cog):
 			f"**daily**\n Pegue diariamente uma quantia em kivs com esse comando.\n**Modo de usar:** `{prefix}daily`\n\n"
 			f"**rank kivs**\n Vejo o rank dos mais ricos com esse comando\n**Modo de usar:** `{prefix}rank kivs`\n\n"
 			f"**raspadinha**\n Compre uma raspadinha e para tentar aumentar seus kivs, cada uma delas custa 500 :drop_of_blood: , você pode ganhar nas linhas, colunas e diagonais.\n**Modo de usar:** `{prefix}raspadinha comprar`\n\n"
-			f"**apostar**\nVocê pode tentar aumentar seus kivs apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n",
+			f"**apostar**\nVocê pode tentar aumentar seus kivs apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n"
+			f'**adivinhar | adv**\nAdivinhe o númeroe ganhe kivs.\n**Cooldown: 5 partidas por hora**ㅤㅤㅤ**Chances de adivinhar:** 4\n**Modo de usar:** `{prefix}adivinhar`\n\n',
 			colour=0xFFD301
 			)
-		kivs_embed.add_field(name="\nㅤㅤㅤㅤㅤㅤㅤㅤCassino\n", value=f"**apostar**\nVocê pode tentar aumentar seus kivs apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n")
-		kivs_embed.set_image(url="https://cdn.discordapp.com/attachments/883810728140734506/973589210097385512/banner.png")
 		kivs_embed.set_footer(text='Kivida Bot')
+
+		# EMbed evento
+		evento_embed = discord.Embed(title="Comandos do evento.", description=f"O evento de festa junina começou, nele o bot irá reagir em algumas mensagens com o emoji de milho :corn:.\nSempre que esse emoji aparecer você tem até 30s para reagir na mensagem e assim receberá 1 :corn:.\nNo final do evento esses milhos serão trocados por prêmios.\n\n**Você também pode conseguir milhos na raspadinha `{prefix}raspadinha` e apostando `{prefix} apostar`\n\n\n**milhos**\nVeja quantos milhos você já tem com esse comando.\n**Modo de usar:** `{prefix}milhos`\n\n", colour=0xFFD301)
+		evento_embed.set_footer(text='Kivida Bot')
+
 		
 		# Embed inicial
 		initial_help_dialogue = discord.Embed(
@@ -90,7 +93,8 @@ class HelpCog(commands.Cog):
 							f'`{prefix}help perfil`\nComandos do seu perfil\n\n'
 							f'`{prefix}help loja`\nComandos da loja\n\n'
 							f"`{prefix}help kivs`\nComandos de economia e cassino\n\n"
-							f'`{prefix}help games`\nComandos dos Games\n\n',
+							f'`{prefix}help games`\nComandos dos Games\n\n'
+							f'`{prefix}help evento`\nComandos do evento\n\n',
 				colour=0xFFD301
 				)
 		initial_help_dialogue.set_thumbnail(
@@ -115,6 +119,8 @@ class HelpCog(commands.Cog):
 				await ctx.send(embed=perfil_embed)
 			elif argument.lower() == "loja":
 				await ctx.send(embed=loja_embed)
+			elif argument.lower() in ["evento", "event", "milhos", "milho"]:
+				await ctx.send(embed=evento_embed)
 			else:
 				pass
 
