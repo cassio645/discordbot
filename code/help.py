@@ -73,7 +73,7 @@ class HelpCog(commands.Cog):
 			title = 'Kivs Kivida Bot',
 			description =f"**kivs | money**\n Com esse comando você pode consultar quantos kivs :drop_of_blood:  você tem.\n**Modo de usar:** `{prefix}kivs`\n\n"
 			f"**daily**\n Pegue diariamente uma quantia em kivs com esse comando.\n**Modo de usar:** `{prefix}daily`\n\n"
-			f"**rank kivs**\n Vejo o rank dos mais ricos com esse comando\n**Modo de usar:** `{prefix}rank kivs`\n\n"
+			f"**rank kivs**\n Veja o rank dos mais ricos com esse comando\n**Modo de usar:** `{prefix}rank kivs`\n\n"
 			f"**raspadinha**\n Compre uma raspadinha e para tentar aumentar seus kivs, cada uma delas custa 500 :drop_of_blood: , você pode ganhar nas linhas, colunas e diagonais.\n**Modo de usar:** `{prefix}raspadinha comprar`\n\n"
 			f"**apostar**\nVocê pode tentar aumentar seus kivs apostando nas máquinas.\nLembrando que você pode jogar até 5 vezes a cada hora.\n\n**Modo de usar:** `{prefix}apostar <valor>`\n\n"
 			f'**adivinhar | adv**\nAdivinhe o númeroe ganhe kivs.\n**Cooldown: 5 partidas por hora**ㅤㅤㅤ**Chances de adivinhar:** 4\n**Modo de usar:** `{prefix}adivinhar`\n\n',
@@ -81,8 +81,9 @@ class HelpCog(commands.Cog):
 			)
 		kivs_embed.set_footer(text='Kivida Bot')
 
-		# EMbed evento
-		evento_embed = discord.Embed(title="Comandos do evento.", description=f"O evento de festa junina começou, nele o bot irá reagir em algumas mensagens com o emoji de milho :corn:.\nSempre que esse emoji aparecer você tem até 30s para reagir na mensagem e assim receberá 1 :corn:.\nNo final do evento esses milhos serão trocados por prêmios.\n\n**Você também pode conseguir milhos na raspadinha `{prefix}raspadinha` e apostando `{prefix} apostar`\n\n\n**milhos**\nVeja quantos milhos você já tem com esse comando.\n**Modo de usar:** `{prefix}milhos`\n\n", colour=0xFFD301)
+		# Embed evento
+		evento_embed = discord.Embed(title="Comandos do evento.", description=f"O evento de festa junina começou, nele o bot irá reagir em algumas mensagens com o emoji de milho :corn:.\nSempre que esse emoji aparecer você tem até 30s para reagir na mensagem e assim receberá 1 :corn:.\n**No final do evento esses milhos serão trocados por prêmios.**\n\nVocê também pode conseguir milhos na raspadinha `{prefix}raspadinha` e apostando `{prefix} apostar`\n\n\n**milhos**\nVeja quantos milhos você já tem com esse comando.\n**Modo de usar:** `{prefix}milhos`\n\n"
+		f"**rank milhos**\nVeja o rank das pessoas que encontraram mais milho.\n**Modo de usar:** `{prefix}rank milhos`\n\n", colour=0xFFD301)
 		evento_embed.set_footer(text='Kivida Bot')
 
 		

@@ -12,6 +12,8 @@ from .my_paginate import paginate_rank
 from db.mydb import get_rank, get_daily, get_time_rep
 from db.cooldown import get_cooldown_aposta, get_cooldown_guess
 
+from db.eventdb import get_all_milho
+
 
 prefix = get_prefix()
 
@@ -282,8 +284,14 @@ class GeneralCog(commands.Cog):
 				msg = await ctx.send(embed=embed1)
 				page = Paginator(bot=self.bot, message=msg, embeds=embeds)
 				await page.start()
+			elif arg.lower() in ["milho", "milhos"]:
+				dados = get_all_milho()
+				embed1, embeds = paginate_rank(dados, len(dados), "Rank de milhos", my_key="milho")
+				msg = await ctx.send(embed=embed1)
+				page = Paginator(bot=self.bot, message=msg, embeds=embeds)
+				await page.start()
 			else:
-				embed_rank = discord.Embed(title=f"Consultar rank", description=f"**Rank de kivs**: `{prefix}rank kivs`\n**Rank vitorias**: `{prefix}rank c4`\n**Rank reps**: `{prefix}rank reps`\n**Rank xp**: `{prefix}rank xp`", colour=0xFFD301)
+				embed_rank = discord.Embed(title=f"Consultar rank", description=f"**Rank de kivs**: `{prefix}rank kivs`\n**Rank vitorias**: `{prefix}rank c4`\n**Rank reps**: `{prefix}rank reps`\n**Rank xp**: `{prefix}rank xp`\n**Rank milho**: `{prefix}rank milho`\n", colour=0xFFD301)
 				await ctx.send(embed=embed_rank)
 		
 	@commands.command()
@@ -323,6 +331,7 @@ class GeneralCog(commands.Cog):
 				 description=f"**Daily**\n{daily}\n\n**Rep**\n{rep}\n\n**Apostar**\n{apostar}\n\n**Adivinhar**\n{adivinhar}\n",
 				 colour=0xFFD301)
 			await ctx.send(embed=cd_embed)
+
 
 
 def setup(bot):

@@ -71,3 +71,12 @@ def remove_milho(user_id, values):
             collection.update_one(user, new_values)
             return True
     else: return False
+
+
+def get_all_milho():
+    # consulta o rank por completo e ordena pela ordem de money
+    registers = list()
+    for x in collection.find():
+        registers.append(x)
+    ordered = (sorted(registers, key = lambda i: i["milho"],reverse=True))
+    return ordered

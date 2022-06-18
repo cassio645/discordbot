@@ -64,7 +64,7 @@ class Rank(commands.Cog):
         xp = choice(xp)
 
         # evento
-        num = randint(1, 1000)
+        num = randint(100, 1000)
         if num <= 60:
             users = set()
             await ctx.add_reaction("\U0001f33d")

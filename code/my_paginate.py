@@ -126,6 +126,11 @@ def create_rank(dates, my_key, num=1):
             for item in dates:
                 rank_ordenado += str(f'**{num}.** <@{item["_id"]}>\t**Level** {item["level"]}\n')
                 num += 1
+        elif my_key == "milho":
+            rank_ordenado = ''
+            for item in dates:
+                rank_ordenado += str(f'**{num}.** **<@{item["_id"]}>\t** {item["milho"]}:corn:\n')
+                num += 1
         return rank_ordenado
 
 def paginate_store(volume, size, embed_title):
