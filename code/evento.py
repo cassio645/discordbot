@@ -28,9 +28,15 @@ class Evento(commands.Cog):
 
     @commands.command(name="milho", aliases=["milhos", "evento"])
     async def milho(self, ctx):
-        milhos = get_milho(ctx.author.id)
-        embed_milho = discord.Embed(title="  ", description=f"**Você possui {milhos['milho']} :corn:**", colour=0xFFD301)
-        await ctx.send(embed=embed_milho)
+        if((ctx.channel.id) in self.channels):
+            milhos = get_milho(ctx.author.id)
+            if milhos:
+                embed_milho = discord.Embed(title="  ", description=f"**Você possui {milhos['milho']} :corn:**", colour=0xFFD301)
+                await ctx.send(embed=embed_milho)
+            else:
+                embed_milho = discord.Embed(title="  ", description=f"**Você possui 0 :corn:**", colour=0xFFD301)
+                await ctx.send(embed=embed_milho)
+
 
 
     @commands.command(name="enviar_milho", aliases=["enviar-milho"])

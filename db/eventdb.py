@@ -77,6 +77,7 @@ def get_all_milho():
     # consulta o rank por completo e ordena pela ordem de money
     registers = list()
     for x in collection.find():
-        registers.append(x)
+        if x["_id"] != 963111852441731142:
+            registers.append(x)
     ordered = (sorted(registers, key = lambda i: i["milho"],reverse=True))
     return ordered
