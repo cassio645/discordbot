@@ -3,8 +3,8 @@
 
 O Kividabot é um projeto de bot do Discord que foi criado com o objetivo de auxiliar no meu aprendizado na criação de bots usando Python. Este bot oferece diversas funções de entretenimento e utilidade para os servidores do Discord em que está presente.
 
-<div style="text-align:center;">
-  <img src="https://cdn.discordapp.com/attachments/979065286705700955/981652943461830676/2_Sem_Ttulo.png" alt="Imagem do Bot" width="100px">
+<div style="display: inline_block" align="center">
+  <img src="https://cdn.discordapp.com/attachments/979065286705700955/981652943461830676/2_Sem_Ttulo.png" alt="Imagem do Bot" width="150px">
 </div>
 
 
@@ -22,11 +22,7 @@ O Kividabot é um projeto de bot do Discord que foi criado com o objetivo de aux
 - **Perfil Personalizado com Imagens:** Crie e personalize seu perfil no Kividabot com imagens e informações pessoais, tornando sua presença no servidor ainda mais única.
 
 # Video de demonstração
-
-<video width="640" height="360" controls>
-
-</video>
-
+https://github.com/cassio645/discordbot/assets/51422880/f91079eb-7450-4af7-8af0-8c1be3aca3cb
 
 ## Autor
 [CASSIO645](https://github.com/cassio645)
