@@ -10,72 +10,79 @@ prefix = get_prefix()
 
 
 class Economy(commands.Cog):
+    """
+    A classe Economy é uma extensão do módulo commands.Cog e fornece comandos relacionados à economia no bot.
+    """
 
-	def __init__(self, bot):
-		self.bot = bot
-		self.channels = all_channels()
+    def __init__(self, bot):
+        """
+        Inicializa uma nova instância da classe Economy.
 
-	@commands.command(name="balance", aliases=["diamantes", "money", "cash", "bal", "dinheiro", "kivs", "atm"])
-	async def balance(self, ctx):
-		if ctx.channel.id in self.channels:
-			dinheiro = get_balance(ctx.author.id)
-			money = pass_to_money(dinheiro)
-			daily_embed = discord.Embed(title=" ", description=f"**Kivs**: {money} :drop_of_blood: ", colour=0xFFD301)
-			await ctx.send(embed=daily_embed)
+        Parameters:
+        bot (discord.ext.commands.Bot): O bot associado a esta classe.
+        """
+        self.bot = bot
+        self.channels = all_channels()
+
+    @commands.command(
+        name="balance",
+        aliases=["diamantes", "money", "cash", "bal", "dinheiro", "kivs", "atm"],
+    )
+    async def balance(self, ctx) -> None:
+        f"""
+        Comando para verificar o saldo de Kivs (moeda) de um usuário.
+
+        Usage:
+                {prefix}balance
+
+        Output:
+                Uma mensagem com o saldo atual de Kivs do usuário.
+        """
+        if ctx.channel.id in self.channels:
+            dinheiro = get_balance(ctx.author.id)
+            money = pass_to_money(dinheiro)
+            daily_embed = discord.Embed(
+                title=" ",
+                description=f"**Kivs**: {money} :drop_of_blood: ",
+                colour=0xFFD301,
+            )
+            await ctx.send(embed=daily_embed)
+
+    @commands.command()
+    async def daily(self, ctx) -> None:
+        f"""
+        Comando para coletar uma recompensa diária de Kivs.
+
+        Usage:
+                {prefix}daily
+
+        Output:
+                Uma mensagem informando o valor da recompensa diária coletada.
+        """
+        if ctx.channel.id in self.channels:
+            today = get_days()
+            date = get_daily(ctx.author.id)
+            if date < today:
+                valor_daily = randint(1000, 3500)
+                if get_vip(ctx.author.id):
+                    valor_daily += valor_daily
+                    daily_embed = discord.Embed(
+                        title=" ",
+                        description=f"**Você recebeu**: {valor_daily}:drop_of_blood: 2x por ser Vip :star2:",
+                        colour=0xFFD301,
+                    )
+                else:
+                    daily_embed = discord.Embed(
+                        title=" ",
+                        description=f"**Você recebeu**: {valor_daily}:drop_of_blood: ",
+                        colour=0xFFD301,
+                    )
+                add_daily(ctx.author.id, money=valor_daily, daily=today)
+                await ctx.send(embed=daily_embed)
+            else:
+                await ctx.send(f"Você já pegou seu daily hoje.")
 
 
-	@commands.command()
-	async def daily(self, ctx):
-		if ctx.channel.id in self.channels:
-			today = get_days()
-			date = get_daily(ctx.author.id)
-			if date < today:
-				valor_daily = randint(1000, 3500)
-				if get_vip(ctx.author.id):
-					valor_daily += valor_daily
-					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily}:drop_of_blood: 2x por ser Vip :star2:", colour=0xFFD301)
-				else:
-					daily_embed = discord.Embed(title=" ", description=f"**Você recebeu**: {valor_daily}:drop_of_blood: ", colour=0xFFD301)
-				add_daily(ctx.author.id, money=valor_daily, daily=today)
-				await ctx.send(embed=daily_embed)
-			else:
-				await ctx.send(f"Você já pegou seu daily hoje.")
-
-'''
-
-	@commands.command(name="pay", aliases=["pagar", "send", "pagamento", "enviar"])
-	@commands.has_permissions(administrator=True)
-	async def pay(self, ctx, user=None, money=None):
-		if ctx.channel.id in self.channels:
-			try:
-				if user and money:
-					if len(user) < 18 and len(money) >= 18:
-						user, money = money, user
-						
-					user = get_id(user)
-					money = int(money)
-					if user and money:
-						add_money(user, money)
-						await ctx.send("Pagamento feito.")
-					else:
-						await ctx.send("Algo deu errado.")
-						return
-				elif user and not money:
-					await ctx.send("Você não informou o valor.")
-					return
-				elif money and not user:
-					await ctx.send("Você não informou o usuário.")
-					return
-				else:
-					await ctx.send(f"`{prefix}pay <@membro | ID> <valor>`")
-					return
-			except:
-				await ctx.send("Algo deu errado.")
-
-'''
-
-	
-	
 def setup(bot):
     """Load Economy Cog."""
     bot.add_cog(Economy(bot))
